@@ -15,8 +15,9 @@
 ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white)
-![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
 
 <br>
 
@@ -34,7 +35,7 @@
 | **주제** | 사회초년생을 위한 AI 기반 생활 금융 정보 가이드 |
 | **개발 형태** | 반응형 웹 서비스 |
 | **개발 기간** | 2026.10 ~ 2026.11 |
-| **목표 완료일** | 2026.11.11 |
+| **목표 완료일** | 2026.11.17 전후 |
 | **발표일** | 2026.11.18 |
 | **진행 상태** | 🚧 개발 진행 중 |
 
@@ -309,8 +310,10 @@ D씨는 이전 직장을 퇴사한 후 일정 기간 경제활동을 하지 않�
 
 | 기술 | 활용 |
 |---|---|
-| Java | 서버 애플리케이션 개발 |
-| Spring Boot | REST API 및 비즈니스 로직 구현 |
+| Python | 백엔드 및 AI 기능 개발 |
+| FastAPI | REST API, 인증 및 비즈니스 로직 구현 |
+| SQLAlchemy | MySQL 데이터베이스 ORM |
+| Pydantic | API 요청·응답 데이터 검증 |
 
 ### AI & Data
 
@@ -318,7 +321,7 @@ D씨는 이전 직장을 퇴사한 후 일정 기간 경제활동을 하지 않�
 |---|---|
 | LLM API (선정 예정) | AI Q&A, 맞춤형 설명 및 퀴즈 생성 |
 | 공공데이터 및 공식 자료 | 법령·세금·보험·지원 제도 정보 활용 |
-| Database (선정 예정) | 사용자 정보, 금융 기준 데이터 등 관리 |
+| MySQL | 사용자 정보, 금융 기준 데이터 등 관리 |
 
 ### Collaboration & Design
 
@@ -340,7 +343,7 @@ D씨는 이전 직장을 퇴사한 후 일정 기간 경제활동을 하지 않�
                                │
                                ▼
                     ┌──────────────────────┐
-                    │    Spring Boot API   │
+                    │    FastAPI API       │
                     │                      │
                     │  사용자 정보 관리     │
                     │  급여·수당 계산       │
@@ -407,13 +410,13 @@ MoA는 법령, 근로, 세금, 사회보험 등 정확성이 중요한 정보를
 
 | 기간 | 개발 단계 | 주요 작업 |
 |---|---|---|
-| 10/7 ~ 10/13 | 기본 UI 및 기능 구현 | 프로젝트 환경 구축, 주요 화면 UI, 백엔드·DB 기본 기능 |
-| 10/14 ~ 10/20 | 정보·계산 기능 구현 | 생활 금융 정보 구축, 급여·주휴수당 계산 |
-| 10/21 ~ 10/27 | AI 기능 구현 | 공식 자료 기반 AI Q&A, 맞춤형 생활 금융 가이드 |
-| 10/28 ~ 11/3 | 퀴즈 및 기능 통합 | AI 퀴즈 생성·해설, 기능 연결, UI 보완 |
-| 11/4 ~ 11/11 | 테스트 및 검토 | 기능 테스트, AI 답변 검증, 오류 수정 |
-| 11/12 ~ 11/17 | 발표 준비 | 발표 자료 제작, 시연 준비 및 최종 점검 |
+| 11/7 ~ 11/9 | 개발 환경 및 인증 | FastAPI·React·MySQL 환경 구축, 회원가입·로그인, 공통 컴포넌트 및 라우팅 |
+| 11/10 ~ 11/12 | 핵심 페이지 및 계산 | 메인 홈페이지, 금융 가이드, 급여·수당 계산 및 API 연동 |
+| 11/13 ~ 11/15 | AI 및 퀴즈 | AI Q&A, 공식 자료 활용, 퀴즈 기능 구현 및 연동 |
+| 11/16 ~ 11/17 | 통합 테스트 | 오류 수정, UI 보완, 시연 및 발표 준비 |
 | 11/18 | 최종 발표 | 프로젝트 발표 및 시연 |
+
+> 일정은 목표 계획이며 실제 개발 진행 상황에 따라 조정될 수 있습니다.
 
 <br>
 
@@ -424,7 +427,7 @@ MoA/
 │
 ├── frontend/           # React + TypeScript + Tailwind CSS
 │
-├── backend/            # Spring Boot
+├── backend/            # Python + FastAPI
 │
 ├── docs/               # 기획·설계 문서
 │
