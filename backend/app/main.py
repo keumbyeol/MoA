@@ -5,7 +5,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.database import Base, engine
-from app.models import User, AuthRefreshToken
+import app.models  # 모든 SQLAlchemy 모델 등록
+
 from app.routers.auth import router as auth_router
 from app.routers.wage import router as wage_router
 
