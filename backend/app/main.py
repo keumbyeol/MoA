@@ -1,31 +1,21 @@
 
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from app.core.database import Base, engine
-import app.models  # 모든 SQLAlchemy 모델 등록
 
 from app.routers.auth import router as auth_router
 from app.routers.wage import router as wage_router
 from app.routers.guide import router as guide_router
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    Base.metadata.create_all(bind=engine)
-    yield
+from app.routers.policy import router as policy_router
+from app.routers.law import router as law_router
 
 
 app = FastAPI(
     title="MOA API",
-    description="사회 초년생을 위한 AI 생활 금융 가이드",
+    description="MOA 금융정보 및 근로정보 안내 서비스 API",
     version="1.0.0",
-    lifespan=lifespan,
 )
 
-
+# CORS 설정
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -37,21 +27,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-# 인증 API
+# API 라우터 등록
 app.include_router(auth_router)
-
-# 임금 계산기 API
 app.include_router(wage_router)
-
-# 금융정보 가이드 API
 app.include_router(guide_router)
+app.include_router(policy_router)
+app.include_router(law_router)
 
 
 @app.get("/")
 def root():
     return {
-        "message": "MOA API 서버가 정상적으로 실행 중입니다."
+        "message": "MOA API 서버가 실행 중입니다."
     }
 
 
