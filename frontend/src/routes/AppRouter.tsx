@@ -1,61 +1,66 @@
 
-import {
-  Link,
-  Navigate,
-  Route,
-  Routes,
-} from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 import ProtectedRoute from '../components/auth/ProtectedRoute'
 import MainLayout from '../components/layout/MainLayout'
 
+// 페이지
 import LoginPage from '../pages/LoginPage'
 import SignupPage from '../pages/SignupPage'
 import CalculatorPage from '../pages/CalculatorPage'
-
-function NotFoundPage() {
-  return (
-    <main className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
-      <h1 className="font-display text-5xl text-primary">
-        404
-      </h1>
-
-      <p className="text-sm text-ink-secondary">
-        페이지를 찾을 수 없습니다.
-      </p>
-
-      <Link
-        to="/calculator"
-        className="text-sm font-semibold text-primary hover:underline"
-      >
-        임금 계산기로 이동
-      </Link>
-    </main>
-  )
-}
+import GuidePage from '../pages/GuidePage'
+import GuideDetailPage from '../pages/GuideDetailPage'
+import NotFoundPage from '../pages/NotFoundPage'
 
 export default function AppRouter() {
   return (
     <Routes>
+      {/* 기본 경로 */}
       <Route
         path="/"
         element={<Navigate to="/calculator" replace />}
       />
 
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
+      {/* 로그인 및 회원가입 */}
+      <Route
+        path="/login"
+        element={<LoginPage />}
+      />
 
+      <Route
+        path="/signup"
+        element={<SignupPage />}
+      />
+
+      {/* 공통 레이아웃 */}
       <Route element={<MainLayout />}>
+
+        {/* 금융정보 가이드 - 비회원 접근 가능 */}
         <Route
-          element={<ProtectedRoute />}
-        >
+          path="/guides"
+          element={<GuidePage />}
+        />
+
+        {/* 금융정보 가이드 상세 - 비회원 접근 가능 */}
+        <Route
+          path="/guides/:guideId"
+          element={<GuideDetailPage />}
+        />
+
+        {/* 로그인 필요한 페이지 */}
+        <Route element={<ProtectedRoute />}>
           <Route
             path="/calculator"
             element={<CalculatorPage />}
           />
         </Route>
 
-        <Route path="*" element={<NotFoundPage />} />
+        {/* 404 페이지 */}
+        <Route
+          path="*"
+          element={<NotFoundPage />}
+        />
+
       </Route>
     </Routes>
   )

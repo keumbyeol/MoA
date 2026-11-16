@@ -9,6 +9,7 @@ import app.models  # 모든 SQLAlchemy 모델 등록
 
 from app.routers.auth import router as auth_router
 from app.routers.wage import router as wage_router
+from app.routers.guide import router as guide_router
 
 
 @asynccontextmanager
@@ -42,6 +43,9 @@ app.include_router(auth_router)
 
 # 임금 계산기 API
 app.include_router(wage_router)
+
+# 금융정보 가이드 API
+app.include_router(guide_router)
 
 
 @app.get("/")
