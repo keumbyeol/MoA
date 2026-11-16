@@ -1,4 +1,8 @@
-from app.models.user import User, AuthRefreshToken
+
+from app.models.user import (
+    User,
+    AuthRefreshToken,
+)
 
 from app.models.financial_guide import (
     DataSource,
@@ -11,6 +15,13 @@ from app.models.financial_guide import (
 
 from app.models.support_policies import SupportPolicy
 
+from app.models.law import (
+    Law,
+    LawVersion,
+    LawArticle,
+)
+
+
 __all__ = [
     "User",
     "AuthRefreshToken",
@@ -21,4 +32,7 @@ __all__ = [
     "Guide",
     "GuideReference",
     "SupportPolicy",
+    "Law",
+    "LawVersion",
+    "LawArticle",
 ]
