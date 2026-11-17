@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react'
 import {
   BriefcaseBusiness,
@@ -6,6 +5,7 @@ import {
   CalendarDays,
   Clock3,
   ShieldCheck,
+  Wallet,
 } from 'lucide-react'
 
 import {
@@ -22,6 +22,7 @@ import {
   type WageCalculateResponse,
   type WageDeductionOptions,
   type WorkShift,
+  type WageRecord,
 } from '../../types/wage'
 
 import WageCalendar from './WageCalendar'
@@ -38,27 +39,49 @@ interface WageCalculatorFormProps {
   onLoadingChange?: (loading: boolean) => void
   onReset?: () => void
   calculateKey?: number
+  loadedRecord?: WageRecord | null
 }
 
+type DeductionKey =
+  | 'national_pension'
+  | 'health_insurance'
+  | 'employment_insurance'
+  | 'income_tax'
+
 const deductionItems: {
-  key: keyof Pick<
-    WageDeductionOptions,
-    | 'national_pension'
-    | 'health_insurance'
-    | 'long_term_care'
-    | 'employment_insurance'
-    | 'income_tax'
-    | 'local_income_tax'
-  >
+  key: DeductionKey
   label: string
+  description: string
 }[] = [
-  { key: 'national_pension', label: '국민연금' },
-  { key: 'health_insurance', label: '건강보험' },
-  { key: 'long_term_care', label: '장기요양보험' },
-  { key: 'employment_insurance', label: '고용보험' },
-  { key: 'income_tax', label: '근로소득세' },
-  { key: 'local_income_tax', label: '지방소득세' },
+  {
+    key: 'national_pension',
+    label: '국민연금',
+    description: '국민연금 보험료',
+  },
+  {
+    key: 'health_insurance',
+    label: '건강보험',
+    description: '건강보험료',
+  },
+  {
+    key: 'employment_insurance',
+    label: '고용보험',
+    description: '근로자 부담 보험료',
+  },
+  {
+    key: 'income_tax',
+    label: '근로소득세',
+    description: '지방소득세 포함',
+  },
 ]
+
+function createDefaultForm(): WageCalculateRequest {
+  return {
+    ...DEFAULT_WAGE_VALUES,
+    deductions: { ...DEFAULT_WAGE_DEDUCTIONS },
+    shifts: [],
+  }
+}
 
 export default function WageCalculatorForm({
   onResultChange,
@@ -66,16 +89,53 @@ export default function WageCalculatorForm({
   onLoadingChange,
   onReset,
   calculateKey = 0,
+  loadedRecord,
 }: WageCalculatorFormProps) {
-  const [form, setForm] = useState<WageCalculateRequest>({
-    ...DEFAULT_WAGE_VALUES,
-    deductions: { ...DEFAULT_WAGE_DEDUCTIONS },
-    shifts: [],
-  })
+  const [form, setForm] = useState<WageCalculateRequest>(
+    createDefaultForm,
+  )
 
   const [loading, setLoading] = useState(false)
 
-  const deductions = {
+  // 저장 기록 선택 시 당시 입력 조건과 계산 결과를 함께 복원합니다.
+  // record.id를 기준으로 하여 일반 입력 중에는 상태를 덮어쓰지 않습니다.
+  useEffect(() => {
+    if (!loadedRecord) return
+
+    const saved = loadedRecord.request_data
+    setForm({
+      ...createDefaultForm(),
+      ...saved,
+      target_year: loadedRecord.target_year,
+      target_month: loadedRecord.target_month,
+      shifts: (saved.shifts ?? []).map((shift) => ({ ...shift })),
+      deductions: {
+        ...DEFAULT_WAGE_DEDUCTIONS,
+        ...(saved.deductions ?? {}),
+        long_term_care: false,
+      },
+    })
+    onRequestChange?.(saved)
+    onResultChange(loadedRecord.result_data)
+  // 기록을 선택할 때만 실행
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadedRecord?.id])
+
+  const dailyExtraTotal =
+    form.daily_meal_allowance +
+    form.daily_transport_allowance +
+    form.daily_other_allowance
+
+  const estimatedWorkDays =
+    form.work_mode === 'FLEXIBLE'
+      ? form.shifts.filter((shift) => shift.attended).length
+      : (form.weekly_work_days ?? 0) * (52 / 12)
+
+  const estimatedMonthlyExtras = Math.round(
+    dailyExtraTotal * estimatedWorkDays
+  )
+
+  const deductions: WageDeductionOptions = {
     ...DEFAULT_WAGE_DEDUCTIONS,
     ...(form.deductions ?? {}),
   }
@@ -83,8 +143,8 @@ export default function WageCalculatorForm({
   const update = (
     changes: Partial<WageCalculateRequest>,
   ) => {
-    setForm((prev) => ({
-      ...prev,
+    setForm((previous) => ({
+      ...previous,
       ...changes,
     }))
 
@@ -104,28 +164,19 @@ export default function WageCalculatorForm({
   }
 
   const toggleDeduction = (
-    key: (typeof deductionItems)[number]['key'],
+    key: DeductionKey,
     checked: boolean,
   ) => {
     const changes: Partial<WageDeductionOptions> = {
       [key]: checked,
     }
 
-    // 연동되는 공제 항목은 함께 해제
-    if (key === 'health_insurance' && !checked) {
+    if (key === 'health_insurance') {
       changes.long_term_care = false
     }
 
-    if (key === 'income_tax' && !checked) {
-      changes.local_income_tax = false
-    }
-
-    if (key === 'long_term_care' && checked) {
-      changes.health_insurance = true
-    }
-
-    if (key === 'local_income_tax' && checked) {
-      changes.income_tax = true
+    if (key === 'income_tax') {
+      changes.local_income_tax = checked
     }
 
     updateDeductions(changes)
@@ -182,21 +233,28 @@ export default function WageCalculatorForm({
       return
     }
 
-    if (
-      deductions.children_8_to_20 >
-      deductions.dependents - 1
-    ) {
-      message.warning(
-        '자녀 수는 본인을 제외한 부양가족 수보다 많을 수 없습니다.',
-      )
-      return
-    }
-
     setLoading(true)
     onLoadingChange?.(true)
 
     try {
-      const payload = buildWagePayload(form)
+      const payload = buildWagePayload({
+        ...form,
+        daily_meal_allowance: form.daily_meal_allowance,
+        daily_transport_allowance:
+          form.daily_transport_allowance,
+        daily_other_allowance: form.daily_other_allowance,
+        deductions: {
+          ...deductions,
+
+          dependents: 1,
+          children_8_to_20: 0,
+          non_taxable_monthly_pay: 0,
+
+          long_term_care: false,
+          local_income_tax: deductions.income_tax,
+        },
+      })
+
       const calculated = await calculateWage(payload)
 
       onRequestChange?.(payload)
@@ -235,11 +293,7 @@ export default function WageCalculatorForm({
   }, [calculateKey])
 
   const handleReset = () => {
-    setForm({
-      ...DEFAULT_WAGE_VALUES,
-      deductions: { ...DEFAULT_WAGE_DEDUCTIONS },
-      shifts: [],
-    })
+    setForm(createDefaultForm())
 
     onResultChange(null)
     onRequestChange?.(null)
@@ -266,18 +320,21 @@ export default function WageCalculatorForm({
 
   return (
     <section className="min-w-0 rounded-[28px] border border-primary-100 bg-white p-5 shadow-sm sm:p-7">
+      {/* 기본 근무 정보 */}
       <div>
         <div className="mb-5 flex items-center gap-2">
           <BriefcaseBusiness
             size={23}
             className="text-primary"
           />
+
           <h2 className="text-[20px] font-bold text-ink">
             기본 근무 정보
           </h2>
         </div>
 
         <div className="space-y-5">
+          {/* 근무 형태 */}
           <div className="grid gap-3 sm:grid-cols-[115px_minmax(0,1fr)] sm:items-center">
             <span className="text-[15px] text-ink">
               근무 형태
@@ -318,6 +375,7 @@ export default function WageCalculatorForm({
             </div>
           </div>
 
+          {/* 시급 */}
           <WageInputField
             label="시급"
             value={form.hourly_wage}
@@ -328,6 +386,7 @@ export default function WageCalculatorForm({
             }
           />
 
+          {/* 고정 근무 */}
           {form.work_mode === 'FIXED' ? (
             <>
               <WageInputField
@@ -362,6 +421,7 @@ export default function WageCalculatorForm({
                   ).toLocaleString('ko-KR')}
                   시간
                 </strong>
+
                 <span className="ml-2 text-[#829474]">
                   (일 근무시간 × 주 근무일수)
                 </span>
@@ -370,11 +430,14 @@ export default function WageCalculatorForm({
           ) : (
             <>
               <p className="text-[13px] leading-6 text-ink-secondary">
-                매주 근무 일정이 달라진다면 달력에서
+                매주 근무 일정이 다르다면 달력에서
                 날짜를 선택하고 출퇴근 시간을 등록해주세요.
+                여러 날짜를 선택해 같은 근무시간을
+                일괄 등록할 수도 있습니다.
               </p>
 
               <WageCalendar
+                key={loadedRecord?.id ?? 'new'}
                 year={
                   form.target_year ??
                   new Date().getFullYear()
@@ -392,15 +455,18 @@ export default function WageCalculatorForm({
         </div>
       </div>
 
+      {/* 수당 설정 */}
       <div className="mt-7 border-t border-primary-100 pt-6">
         <div className="mb-5 flex items-center gap-2">
           <HandCoins
             size={23}
             className="text-primary"
           />
+
           <h2 className="text-[20px] font-bold text-ink">
             수당 설정
           </h2>
+
           <span className="text-[13px] text-ink-muted">
             (선택)
           </span>
@@ -411,9 +477,7 @@ export default function WageCalculatorForm({
             <label className="flex cursor-pointer items-center gap-2 text-[14px] text-ink">
               <input
                 type="checkbox"
-                checked={
-                  form.include_weekly_holiday_pay
-                }
+                checked={form.include_weekly_holiday_pay}
                 onChange={(event) =>
                   update({
                     include_weekly_holiday_pay:
@@ -443,6 +507,7 @@ export default function WageCalculatorForm({
             )}
           </div>
 
+          {/* 사업장 규모 */}
           <div>
             <p className="mb-2 text-[14px] font-semibold text-ink">
               사업장 규모
@@ -482,83 +547,171 @@ export default function WageCalculatorForm({
             </div>
           </div>
 
-          {form.work_mode === 'FIXED' && (
-            <div className="space-y-4">
-              <WageInputField
-                label="주 연장근로"
-                value={form.weekly_overtime_hours}
-                unit="시간"
-                min={0}
-                max={52}
-                step={0.5}
-                onChange={(weekly_overtime_hours) =>
-                  update({ weekly_overtime_hours })
-                }
-              />
+          {/* 자동 가산수당 설정 */}
+          <div className="space-y-3 rounded-xl border border-[#E3EBDD] bg-[#FBFCF9] px-4 py-4">
+            {([
+              [
+                'include_overtime_pay',
+                '연장근로수당 자동 적용',
+              ],
+              [
+                'include_night_pay',
+                '야간근로수당 자동 적용 (22:00~06:00)',
+              ],
+              [
+                'include_holiday_work_pay',
+                '법정 공휴일 근로수당 자동 적용',
+              ],
+            ] as const).map(([key, label]) => (
+              <label
+                key={key}
+                className="flex cursor-pointer items-center gap-2 text-[14px] text-ink"
+              >
+                <input
+                  type="checkbox"
+                  checked={form[key]}
+                  onChange={(event) =>
+                    update({
+                      [key]: event.target.checked,
+                    })
+                  }
+                  className="h-4 w-4 accent-[#83B64B]"
+                />
+                {label}
+              </label>
+            ))}
 
-              <WageInputField
-                label="주 야간근로"
-                value={form.weekly_night_hours}
-                unit="시간"
-                min={0}
-                step={0.5}
-                onChange={(weekly_night_hours) =>
-                  update({ weekly_night_hours })
-                }
-              />
-
-              <WageInputField
-                label="주 휴일근로"
-                value={
-                  form.weekly_holiday_work_hours
-                }
-                unit="시간"
-                min={0}
-                step={0.5}
-                onChange={(weekly_holiday_work_hours) =>
-                  update({
-                    weekly_holiday_work_hours,
-                  })
-                }
-              />
-
-              <p className="text-[12px] leading-5 text-ink-muted">
-                야간·휴일근로시간은 기본 근무시간에
-                포함된 시간으로 입력해주세요.
-                연장근로시간은 별도 추가 시간입니다.
-              </p>
-            </div>
-          )}
+            <p className="text-[12px] leading-5 text-ink-muted">
+              유동 근무는 날짜와 출퇴근 시간으로
+              자동 판정합니다. 일반 토·일요일은
+              공휴일로 취급하지 않습니다.
+              고정 근무는 날짜·출퇴근 시간이 없어
+              자동 판정할 수 없으며, 기존 추가
+              근로시간 값만 반영됩니다.
+            </p>
+          </div>
 
           <WageInfoBox />
         </div>
       </div>
 
+      {/* 일별 부가 수입 */}
       <div className="mt-7 border-t border-primary-100 pt-6">
         <div className="mb-5 flex items-center gap-2">
-          <ShieldCheck
+          <Wallet
             size={23}
             className="text-primary"
           />
+
           <h2 className="text-[20px] font-bold text-ink">
-            세금 및 4대보험
+            일별 부가 수입
           </h2>
+
           <span className="text-[13px] text-ink-muted">
             (선택)
           </span>
         </div>
 
         <p className="mb-4 text-[13px] leading-6 text-ink-secondary">
-          공제되는 항목을 선택해주세요.
+          근무한 날마다 지급되는 식대, 교통비,
+          기타 수당을 입력해주세요.
+          근무일수에 따라 예상 금액을 계산합니다.
+        </p>
+
+        <div className="space-y-4">
+          <WageInputField
+            label="일별 식대"
+            value={form.daily_meal_allowance}
+            unit="원 / 일"
+            min={0}
+            onChange={(meal) =>
+              update({
+                daily_meal_allowance: Math.max(0, meal),
+              })
+            }
+          />
+
+          <WageInputField
+            label="일별 교통비"
+            value={form.daily_transport_allowance}
+            unit="원 / 일"
+            min={0}
+            onChange={(transport) =>
+              update({
+                daily_transport_allowance:
+                  Math.max(0, transport),
+              })
+            }
+          />
+
+          <WageInputField
+            label="일별 기타 수당"
+            value={form.daily_other_allowance}
+            unit="원 / 일"
+            min={0}
+            onChange={(other) =>
+              update({
+                daily_other_allowance: Math.max(0, other),
+              })
+            }
+          />
+        </div>
+
+        <div className="mt-5 rounded-xl bg-[#F3F8EA] px-4 py-4">
+          <p className="text-[12px] text-[#5B783E]">
+            예상 월 부가 수입 (급여에 포함)
+          </p>
+
+          <p className="mt-1 text-[22px] font-bold text-[#56852B]">
+            {estimatedMonthlyExtras.toLocaleString('ko-KR')}원
+          </p>
+
+          <p className="mt-1 text-[12px] text-[#6C805D]">
+            일별 {dailyExtraTotal.toLocaleString('ko-KR')}원
+            {' × '}
+            예상{' '}
+            {estimatedWorkDays.toLocaleString('ko-KR', {
+              maximumFractionDigits: 1,
+            })}
+            일
+          </p>
+        </div>
+
+        <p className="mt-3 text-[12px] leading-5 text-ink-muted">
+          부가 수입은 총급여 및 예상 공제액에
+          포함됩니다. 식대 등 비과세 요건은 별도로
+          판정하지 않아 전액 과세 대상으로 추정합니다.
+        </p>
+      </div>
+
+      {/* 세금 및 4대보험 */}
+      <div className="mt-7 border-t border-primary-100 pt-6">
+        <div className="mb-5 flex items-center gap-2">
+          <ShieldCheck
+            size={23}
+            className="text-primary"
+          />
+
+          <h2 className="text-[20px] font-bold text-ink">
+            세금 및 4대보험
+          </h2>
+
+          <span className="text-[13px] text-ink-muted">
+            (선택)
+          </span>
+        </div>
+
+        <p className="mb-4 text-[13px] leading-6 text-ink-secondary">
+          예상 급여에서 공제할 항목을 선택해주세요.
           실제 가입 및 공제 여부는 근무 조건에 따라
           달라질 수 있습니다.
         </p>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {deductionItems.map((item) => (
             <label
               key={item.key}
-              className="flex cursor-pointer items-center gap-2 rounded-xl border border-[#E3EBDD] bg-[#FBFCF9] px-3 py-3 text-[13px] text-ink"
+              className="flex cursor-pointer items-center gap-3 rounded-xl border border-[#E3EBDD] bg-[#FBFCF9] px-4 py-4 transition-colors hover:border-[#B5D596]"
             >
               <input
                 type="checkbox"
@@ -571,71 +724,35 @@ export default function WageCalculatorForm({
                 }
                 className="h-4 w-4 shrink-0 accent-[#83B64B]"
               />
-              {item.label}
+
+              <div>
+                <p className="text-[14px] font-semibold text-ink">
+                  {item.label}
+                </p>
+
+                <p className="mt-1 text-[11px] text-ink-muted">
+                  {item.description}
+                </p>
+              </div>
             </label>
           ))}
         </div>
 
-        <div className="mt-5 space-y-4">
-          <WageInputField
-            label="부양가족 수"
-            value={deductions.dependents}
-            unit="명"
-            min={1}
-            max={20}
-            onChange={(dependents) =>
-              updateDeductions({
-                dependents,
-                children_8_to_20: Math.min(
-                  deductions.children_8_to_20,
-                  Math.max(dependents - 1, 0),
-                ),
-              })
-            }
-          />
-
-          <WageInputField
-            label="8~20세 자녀 수"
-            value={deductions.children_8_to_20}
-            unit="명"
-            min={0}
-            max={20}
-            onChange={(children_8_to_20) =>
-              updateDeductions({
-                children_8_to_20,
-              })
-            }
-          />
-
-          <WageInputField
-            label="월 비과세 급여"
-            value={deductions.non_taxable_monthly_pay}
-            unit="원"
-            min={0}
-            onChange={(non_taxable_monthly_pay) =>
-              updateDeductions({
-                non_taxable_monthly_pay,
-              })
-            }
-          />
-
-          <p className="text-[12px] leading-5 text-ink-muted">
-            부양가족 수에는 본인을 포함합니다.
-            비과세 급여는 세금·보험료 추정 시
-            차감하는 금액이며, 실제 비과세 인정
-            여부는 별도로 확인해야 합니다.
-          </p>
+        <div className="mt-4 rounded-xl bg-[#F3F8EA] px-4 py-3 text-[12px] leading-6 text-[#5B783E]">
+          장기요양보험은 계산에서 제외합니다.
+          근로소득세 선택 시 지방소득세가 함께 계산됩니다.
         </div>
 
-        <div className="mt-5 rounded-xl bg-[#FFF9E9] px-4 py-3 text-[12px] leading-6 text-[#8B702E]">
-          예상 실수령액은 2026년 일반 보험요율과
-          임시 소득세 추정식을 사용한 참고 금액입니다.
-          국세청 근로소득 간이세액표가 아직
-          적용되지 않았으므로 실제 원천징수액과
-          차이가 날 수 있습니다.
+        <div className="mt-4 rounded-xl bg-[#FFF9E9] px-4 py-3 text-[12px] leading-6 text-[#8B702E]">
+          예상 실수령액은 보험요율과 임시 소득세
+          추정식을 사용한 참고 금액입니다.
+          세금 계산에는 본인 1명, 부양 자녀 없음,
+          비과세 급여 0원을 기본값으로 적용합니다.
+          실제 원천징수액과 차이가 날 수 있습니다.
         </div>
       </div>
 
+      {/* 계산 버튼 */}
       <button
         type="button"
         onClick={() => void handleCalculate()}

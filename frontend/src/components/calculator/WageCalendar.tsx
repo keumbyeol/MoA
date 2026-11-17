@@ -7,9 +7,11 @@ import {
   Clock3,
   Plus,
   Trash2,
+  X,
 } from 'lucide-react'
 
 import type { WorkShift } from '../../types/wage'
+import { message } from '../common/Message'
 
 interface WageCalendarProps {
   year: number
@@ -39,7 +41,10 @@ function getHours(shift: WorkShift) {
 
   if (minutes <= 0) minutes += 1440
 
-  return Math.max(0, (minutes - shift.break_minutes) / 60)
+  return Math.max(
+    0,
+    (minutes - shift.break_minutes) / 60,
+  )
 }
 
 function makeShift(workDate: string): WorkShift {
@@ -62,13 +67,8 @@ export default function WageCalendar({
   onMonthChange,
   onChange,
 }: WageCalendarProps) {
-  const [selectedDate, setSelectedDate] = useState<string | null>(
-    null,
-  )
-
-  useEffect(() => {
-    setSelectedDate(null)
-  }, [year, month])
+  const [selectedDates, setSelectedDates] = useState<string[]>([])
+  const [draft, setDraft] = useState<WorkShift | null>(null)
 
   const days = useMemo(() => {
     const firstDay = new Date(year, month - 1, 1).getDay()
@@ -89,24 +89,61 @@ export default function WageCalendar({
     return cells
   }, [year, month])
 
-  const selectedShift = shifts.find(
-    (shift) => shift.work_date === selectedDate,
+  const shiftsByDate = useMemo(
+    () => new Map(shifts.map((shift) => [shift.work_date, shift])),
+    [shifts],
   )
 
-  const [draft, setDraft] = useState<WorkShift | null>(null)
+  const selectedDate = selectedDates[0] ?? null
+
+  const selectedShift =
+    selectedDates.length === 1 && selectedDate
+      ? shiftsByDate.get(selectedDate)
+      : null
 
   useEffect(() => {
-    if (!selectedDate) {
-      setDraft(null)
+    setSelectedDates([])
+    setDraft(null)
+  }, [year, month])
+
+  const selectDate = (date: string) => {
+    if (selectedDates.includes(date)) {
+      const next = selectedDates.filter((item) => item !== date)
+
+      setSelectedDates(next)
+
+      if (next.length === 1) {
+        const existing = shiftsByDate.get(next[0])
+        setDraft(
+          existing
+            ? { ...existing }
+            : makeShift(next[0]),
+        )
+      } else if (next.length === 0) {
+        setDraft(null)
+      }
+
       return
     }
 
-    const existing = shifts.find(
-      (shift) => shift.work_date === selectedDate,
-    )
+    const next = [...selectedDates, date].sort()
 
-    setDraft(existing ? { ...existing } : makeShift(selectedDate))
-  }, [selectedDate, shifts])
+    setSelectedDates(next)
+
+    if (next.length === 1) {
+      const existing = shiftsByDate.get(date)
+      setDraft(
+        existing
+          ? { ...existing }
+          : makeShift(date),
+      )
+    } else if (selectedDates.length === 1 && draft) {
+      // 여러 날짜를 선택할 때 현재 입력값을 유지합니다.
+      setDraft({ ...draft })
+    } else if (!draft) {
+      setDraft(makeShift(date))
+    }
+  }
 
   const changeMonth = (offset: number) => {
     const next = new Date(year, month - 1 + offset, 1)
@@ -117,46 +154,92 @@ export default function WageCalendar({
     )
   }
 
-  const saveShift = () => {
-    if (!draft) return
+  const updateDraft = (changes: Partial<WorkShift>) => {
+    setDraft((previous) =>
+      previous ? { ...previous, ...changes } : previous,
+    )
+  }
+
+  const saveShifts = () => {
+    if (!draft || selectedDates.length === 0) return
 
     const hours = getHours(draft)
 
     if (draft.attended && hours <= 0) {
-      window.alert(
+      message.warning(
         '출퇴근 시간과 휴게시간을 확인해주세요.',
       )
       return
     }
 
+    if (
+      draft.night_break_minutes != null &&
+      draft.night_break_minutes > draft.break_minutes
+    ) {
+      message.warning(
+        '야간 휴게시간은 전체 휴게시간보다 클 수 없습니다.',
+      )
+      return
+    }
+
+    const selectedSet = new Set(selectedDates)
+
+    const newShifts: WorkShift[] = selectedDates.map((date) => ({
+      ...draft,
+      work_date: date,
+    }))
+
     const next = [
       ...shifts.filter(
-        (shift) => shift.work_date !== draft.work_date,
+        (shift) => !selectedSet.has(shift.work_date),
       ),
-      draft,
+      ...newShifts,
     ].sort((a, b) =>
       a.work_date.localeCompare(b.work_date),
     )
 
     onChange(next)
-    setSelectedDate(null)
+
+    message.success(
+      `${selectedDates.length}일의 근무 일정이 저장되었습니다.`,
+    )
+
+    setSelectedDates([])
+    setDraft(null)
   }
 
-  const deleteShift = () => {
-    if (!selectedDate) return
+  const deleteShifts = () => {
+    if (selectedDates.length === 0) return
+
+    const selectedSet = new Set(selectedDates)
+
+    const registeredCount = selectedDates.filter(
+      (date) => shiftsByDate.has(date),
+    ).length
+
+    if (registeredCount === 0) {
+      setSelectedDates([])
+      setDraft(null)
+      return
+    }
 
     onChange(
       shifts.filter(
-        (shift) => shift.work_date !== selectedDate,
+        (shift) => !selectedSet.has(shift.work_date),
       ),
     )
-    setSelectedDate(null)
+
+    message.success(
+      `${registeredCount}일의 근무 기록이 삭제되었습니다.`,
+    )
+
+    setSelectedDates([])
+    setDraft(null)
   }
 
-  const updateDraft = (changes: Partial<WorkShift>) => {
-    setDraft((prev) =>
-      prev ? { ...prev, ...changes } : prev,
-    )
+  const clearSelection = () => {
+    setSelectedDates([])
+    setDraft(null)
   }
 
   const totalHours = shifts.reduce(
@@ -168,14 +251,20 @@ export default function WageCalendar({
     (shift) => shift.attended,
   ).length
 
+  const existingSelectedCount = selectedDates.filter(
+    (date) => shiftsByDate.has(date),
+  ).length
+
   return (
     <div className="rounded-[22px] border border-[#E5ECD9] bg-[#FBFCF7] p-4 sm:p-5">
+      {/* 달력 헤더 */}
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <CalendarDays
             size={21}
             className="text-[#78A83E]"
           />
+
           <h3 className="text-[17px] font-bold text-[#263822]">
             날짜별 근무 등록
           </h3>
@@ -206,6 +295,13 @@ export default function WageCalendar({
         </div>
       </div>
 
+      <p className="mb-4 text-[12px] leading-5 text-[#77816E]">
+        날짜를 여러 개 선택한 뒤 동일한 근무시간을
+        한 번에 등록할 수 있습니다.
+        날짜별로 시간이 다르다면 하나씩 선택해 수정하세요.
+      </p>
+
+      {/* 요일 */}
       <div className="grid grid-cols-7 gap-1 sm:gap-2">
         {WEEKDAYS.map((day, index) => (
           <div
@@ -221,6 +317,7 @@ export default function WageCalendar({
           </div>
         ))}
 
+        {/* 날짜 */}
         {days.map((day, index) => {
           if (!day) {
             return (
@@ -231,22 +328,20 @@ export default function WageCalendar({
             )
           }
 
-          const shift = shifts.find(
-            (item) => item.work_date === day,
-          )
-
-          const selected = selectedDate === day
+          const shift = shiftsByDate.get(day)
+          const selected = selectedDates.includes(day)
           const dateNumber = Number(day.slice(-2))
 
           return (
             <button
               key={day}
               type="button"
-              onClick={() => setSelectedDate(day)}
+              onClick={() => selectDate(day)}
+              aria-pressed={selected}
               className={[
                 'flex min-h-[58px] flex-col items-center justify-start rounded-xl border px-1 py-2 transition sm:min-h-[72px]',
                 selected
-                  ? 'border-[#7BAE43] bg-[#E8F4D4]'
+                  ? 'border-[#7BAE43] bg-[#E8F4D4] ring-1 ring-[#7BAE43]'
                   : shift
                     ? 'border-[#D4E9BB] bg-[#F0F8E7]'
                     : 'border-transparent bg-white hover:border-[#D4E9BB]',
@@ -263,30 +358,80 @@ export default function WageCalendar({
                     : '결근'}
                 </span>
               )}
+
+              {selected && (
+                <span className="mt-1 text-[10px] font-bold text-[#56852B]">
+                  선택
+                </span>
+              )}
             </button>
           )
         })}
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#E5ECD9] pt-4 text-[13px]">
-        <span className="text-[#697864]">
-          날짜를 선택해 근무시간을 등록하세요.
-        </span>
+      {/* 선택 현황 */}
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#E5ECD9] pt-4">
+        <div className="flex flex-wrap gap-3 text-[13px]">
+          <span className="font-semibold text-[#588B2D]">
+            근무 {registeredDays}일
+          </span>
 
-        <div className="flex gap-4 font-semibold text-[#588B2D]">
-          <span>근무 {registeredDays}일</span>
-          <span>총 {totalHours.toLocaleString()}시간</span>
+          <span className="font-semibold text-[#588B2D]">
+            총 {totalHours.toLocaleString('ko-KR')}시간
+          </span>
         </div>
+
+        {selectedDates.length > 0 && (
+          <button
+            type="button"
+            onClick={clearSelection}
+            className="flex items-center gap-1 text-[12px] text-[#697864] hover:text-[#263822]"
+          >
+            <X size={14} />
+            선택 해제
+          </button>
+        )}
       </div>
 
-      {selectedDate && draft && (
+      {/* 근무시간 입력 */}
+      {selectedDates.length > 0 && draft && (
         <div className="mt-5 rounded-2xl border border-[#DDE9CF] bg-white p-4">
           <div className="mb-4 flex items-center gap-2">
-            <Clock3 size={18} className="text-[#75A63B]" />
+            <Clock3
+              size={18}
+              className="text-[#75A63B]"
+            />
+
             <h4 className="font-bold text-[#263822]">
-              {selectedDate} 근무 설정
+              {selectedDates.length === 1
+                ? `${selectedDate} 근무 설정`
+                : `${selectedDates.length}일 일괄 근무 설정`}
             </h4>
           </div>
+
+          {selectedDates.length > 1 && (
+            <div className="mb-4 rounded-xl bg-[#F3F8EA] px-4 py-3">
+              <p className="text-[12px] leading-5 text-[#5B783E]">
+                선택한 {selectedDates.length}일에 동일한
+                근무시간을 적용합니다.
+              </p>
+
+              <p className="mt-2 break-words text-[12px] text-[#5B783E]">
+                {selectedDates
+                  .map((date) => `${Number(date.slice(-2))}일`)
+                  .join(', ')}
+              </p>
+            </div>
+          )}
+
+          {existingSelectedCount > 0 && (
+            <p className="mb-4 rounded-xl bg-[#FFF9E9] px-4 py-3 text-[12px] leading-5 text-[#8B702E]">
+              선택한 날짜 중 이미 등록된 날짜가
+              {` ${existingSelectedCount}일 `}
+              있습니다. 저장하면 해당 날짜의 기존
+              근무시간이 새 설정으로 변경됩니다.
+            </p>
+          )}
 
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="text-[13px] text-[#52624C]">
@@ -294,9 +439,9 @@ export default function WageCalendar({
               <input
                 type="time"
                 value={draft.start_time}
-                onChange={(e) =>
+                onChange={(event) =>
                   updateDraft({
-                    start_time: e.target.value,
+                    start_time: event.target.value,
                   })
                 }
                 className="mt-1 block h-11 w-full rounded-xl border border-[#E1E9D8] bg-white px-3 text-[#263822]"
@@ -308,9 +453,9 @@ export default function WageCalendar({
               <input
                 type="time"
                 value={draft.end_time}
-                onChange={(e) =>
+                onChange={(event) =>
                   updateDraft({
-                    end_time: e.target.value,
+                    end_time: event.target.value,
                   })
                 }
                 className="mt-1 block h-11 w-full rounded-xl border border-[#E1E9D8] bg-white px-3 text-[#263822]"
@@ -324,14 +469,20 @@ export default function WageCalendar({
                 min={0}
                 max={1440}
                 value={draft.break_minutes}
-                onChange={(e) =>
+                onChange={(event) => {
+                  const minutes = Math.max(
+                    0,
+                    Number(event.target.value),
+                  )
+
                   updateDraft({
-                    break_minutes: Math.max(
-                      0,
-                      Number(e.target.value),
+                    break_minutes: minutes,
+                    night_break_minutes: Math.min(
+                      draft.night_break_minutes ?? 0,
+                      minutes,
                     ),
                   })
-                }
+                }}
                 className="mt-1 block h-11 w-full rounded-xl border border-[#E1E9D8] bg-white px-3 text-[#263822]"
               />
             </label>
@@ -343,11 +494,11 @@ export default function WageCalendar({
                 min={0}
                 max={draft.break_minutes}
                 value={draft.night_break_minutes ?? 0}
-                onChange={(e) =>
+                onChange={(event) =>
                   updateDraft({
-                    night_break_minutes: Math.max(
-                      0,
-                      Number(e.target.value),
+                    night_break_minutes: Math.min(
+                      draft.break_minutes,
+                      Math.max(0, Number(event.target.value)),
                     ),
                   })
                 }
@@ -361,9 +512,9 @@ export default function WageCalendar({
               <input
                 type="checkbox"
                 checked={draft.is_scheduled}
-                onChange={(e) =>
+                onChange={(event) =>
                   updateDraft({
-                    is_scheduled: e.target.checked,
+                    is_scheduled: event.target.checked,
                   })
                 }
                 className="accent-[#7DAE48]"
@@ -375,9 +526,9 @@ export default function WageCalendar({
               <input
                 type="checkbox"
                 checked={draft.attended}
-                onChange={(e) =>
+                onChange={(event) =>
                   updateDraft({
-                    attended: e.target.checked,
+                    attended: event.target.checked,
                   })
                 }
                 className="accent-[#7DAE48]"
@@ -389,9 +540,9 @@ export default function WageCalendar({
               <input
                 type="checkbox"
                 checked={draft.is_holiday}
-                onChange={(e) =>
+                onChange={(event) =>
                   updateDraft({
-                    is_holiday: e.target.checked,
+                    is_holiday: event.target.checked,
                   })
                 }
                 className="accent-[#7DAE48]"
@@ -400,25 +551,32 @@ export default function WageCalendar({
             </label>
           </div>
 
-          <p className="mt-3 text-[12px] text-[#7A8573]">
-            예상 유급 근무시간: {getHours(draft).toLocaleString()}시간
+          <p className="mt-4 text-[12px] text-[#7A8573]">
+            예상 유급 근무시간:{' '}
+            <strong className="text-[#588B2D]">
+              {getHours(draft).toLocaleString('ko-KR')}시간
+            </strong>
+            {selectedDates.length > 1 &&
+              ` × ${selectedDates.length}일`}
           </p>
 
-          <div className="mt-4 flex flex-wrap justify-end gap-2">
-            {selectedShift && (
+          <div className="mt-5 flex flex-wrap justify-end gap-2">
+            {existingSelectedCount > 0 && (
               <button
                 type="button"
-                onClick={deleteShift}
-                className="flex items-center gap-1 rounded-xl border border-red-200 px-4 py-2.5 text-[13px] text-red-600"
+                onClick={deleteShifts}
+                className="flex items-center gap-1 rounded-xl border border-red-200 px-4 py-2.5 text-[13px] text-red-600 hover:bg-red-50"
               >
                 <Trash2 size={15} />
-                삭제
+                {selectedDates.length === 1
+                  ? '삭제'
+                  : '선택 기록 삭제'}
               </button>
             )}
 
             <button
               type="button"
-              onClick={() => setSelectedDate(null)}
+              onClick={clearSelection}
               className="rounded-xl border border-[#E1E9D8] px-4 py-2.5 text-[13px]"
             >
               취소
@@ -426,11 +584,15 @@ export default function WageCalendar({
 
             <button
               type="button"
-              onClick={saveShift}
-              className="flex items-center gap-1 rounded-xl bg-[#7DAE48] px-4 py-2.5 text-[13px] font-bold text-white"
+              onClick={saveShifts}
+              className="flex items-center gap-1 rounded-xl bg-[#7DAE48] px-4 py-2.5 text-[13px] font-bold text-white hover:bg-[#6B9B38]"
             >
               <Plus size={16} />
-              {selectedShift ? '수정 완료' : '근무 등록'}
+              {selectedDates.length > 1
+                ? `${selectedDates.length}일 일괄 등록`
+                : selectedShift
+                  ? '수정 완료'
+                  : '근무 등록'}
             </button>
           </div>
         </div>

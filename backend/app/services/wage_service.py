@@ -20,9 +20,6 @@ MONTHLY_WEEKS = Decimal(365) / Decimal(7) / Decimal(12)
 
 PENSION_RATE = Decimal("0.0475")
 HEALTH_RATE = Decimal("0.03595")
-LONG_TERM_CARE_RATIO = (
-    Decimal("0.009448") / Decimal("0.0719")
-)
 EMPLOYMENT_RATE = Decimal("0.009")
 
 DISCLAIMER = (
@@ -55,6 +52,7 @@ def empty_amounts() -> dict[str, Decimal]:
         "overtime_pay": Decimal(0),
         "night_pay": Decimal(0),
         "holiday_work_pay": Decimal(0),
+        "extra_pay": Decimal(0),
     }
 
 
@@ -78,6 +76,25 @@ def make_breakdown(
         **rounded,
         total_pay=sum(rounded.values()),
     )
+
+
+def public_holiday(day: date) -> bool:
+    """대한민국 공휴일/대체공휴일 중 일반 일요일은 제외.
+
+    holidays 패키지의 KR 달력을 사용합니다. 임시공휴일은 패키지 업데이트
+    반영 여부에 따라 달라질 수 있습니다.
+    """
+    import holidays
+    kr = holidays.country_holidays("KR", years=[day.year])
+    if day not in kr:
+        return False
+    name = str(kr.get(day, ""))
+    # '일요일' 자체를 이유로 한 휴일만 제외. 공휴일이 일요일과 겹치면 포함.
+    return name not in ("Sunday", "일요일")
+
+
+def daily_extra(data: WageCalculateRequest) -> Decimal:
+    return dec(data.daily_meal_allowance + data.daily_transport_allowance + data.daily_other_allowance)
 
 
 def monday_of(day: date) -> date:
@@ -248,16 +265,7 @@ def calculate_deductions(
         else 0
     )
 
-    long_term = (
-        round_won(
-            dec(health) * LONG_TERM_CARE_RATIO
-        )
-        if (
-            options.long_term_care
-            and options.health_insurance
-        )
-        else 0
-    )
+    long_term = 0  # MOA 요청: 장기요양보험 계산 제외
 
     employment = (
         round_won(
@@ -365,13 +373,9 @@ def calculate_fixed(
             data.weekly_work_hours or 0
         )
 
-    overtime_hours = dec(
-        data.weekly_overtime_hours
-    )
-    night = dec(data.weekly_night_hours)
-    holiday = dec(
-        data.weekly_holiday_work_hours
-    )
+    overtime_hours = dec(data.weekly_overtime_hours if data.include_overtime_pay else 0)
+    night = dec(data.weekly_night_hours if data.include_night_pay else 0)
+    holiday = dec(data.weekly_holiday_work_hours if data.include_holiday_work_pay else 0)
 
     at_least_five = (
         data.workplace_employee_count
@@ -388,6 +392,8 @@ def calculate_fixed(
     weekly["base_pay"] = (
         wage * weekly_hours
     )
+
+    weekly["extra_pay"] = daily_extra(data) * dec(data.weekly_work_days or 0)
 
     if (
         data.include_weekly_holiday_pay
@@ -434,6 +440,8 @@ def calculate_fixed(
         "입력한 시간입니다.",
         "야간 및 휴일근로시간은 이미 기본급에 "
         "포함된 근무시간이라고 가정했습니다.",
+        "고정 근무는 출퇴근 시각과 날짜가 없어 자동 판정이 불가능합니다. "
+        "기존 입력된 추가 근로시간만 계산합니다. "
         "고정 근무의 휴일근로 가산은 입력 시간에 "
         "50%를 적용한 단순 추정입니다. "
         "휴일 8시간 초과 등은 실제 근무일별 "
@@ -573,6 +581,7 @@ def calculate_flexible(
             amounts["base_pay"] += (
                 wage * hours
             )
+            amounts["extra_pay"] += daily_extra(data)
 
             if at_least_five:
                 daily_overtime = max(
@@ -604,14 +613,14 @@ def calculate_flexible(
                     + weekly_excess
                 )
 
-                if not shift.is_holiday:
+                if data.include_overtime_pay and not public_holiday(shift.work_date):
                     amounts["overtime_pay"] += (
                         wage
                         * overtime
                         * Decimal("0.5")
                     )
 
-                night = night_hours(shift)
+                night = night_hours(shift) if data.include_night_pay else Decimal(0)
 
                 if night is None:
                     missing_night_break = True
@@ -622,7 +631,7 @@ def calculate_flexible(
                         * Decimal("0.5")
                     )
 
-                if shift.is_holiday:
+                if data.include_holiday_work_pay and public_holiday(shift.work_date):
                     first_eight = min(
                         hours, Decimal(8)
                     )
@@ -730,6 +739,7 @@ def calculate_flexible(
         "포함했습니다.",
         "연장·야간·휴일근로수당에는 기본급과 "
         "중복되지 않도록 가산분만 표시했습니다.",
+        "휴일근로는 대한민국 공휴일·대체공휴일을 자동 판정하며 일반 주말은 제외합니다.",
         "소정근로일은 is_scheduled, 출근 여부는 "
         "attended 값을 기준으로 판단합니다.",
     ]

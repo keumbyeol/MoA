@@ -36,6 +36,7 @@ const EMPTY_BREAKDOWN: WageBreakdown = {
   overtime_pay: 0,
   night_pay: 0,
   holiday_work_pay: 0,
+  extra_pay: 0,
   total_pay: 0,
 }
 
@@ -107,6 +108,10 @@ export default function WageResultCard({
     {
       label: '휴일근로수당',
       amount: breakdown.holiday_work_pay,
+    },
+    {
+      label: '부가 수입 (식대·교통비·기타)',
+      amount: breakdown.extra_pay ?? 0,
     },
   ]
 

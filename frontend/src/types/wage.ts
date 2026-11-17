@@ -1,8 +1,5 @@
-
 export type EmploymentType = 'HOURLY'
-
 export type WorkMode = 'FIXED' | 'FLEXIBLE'
-
 export type WorkplaceSize = 'UNDER_5' | 'AT_LEAST_5'
 
 export interface WorkShift {
@@ -23,7 +20,6 @@ export interface WageDeductionOptions {
   employment_insurance: boolean
   income_tax: boolean
   local_income_tax: boolean
-
   dependents: number
   children_8_to_20: number
   non_taxable_monthly_pay: number
@@ -36,7 +32,6 @@ export interface WageDeductionBreakdown {
   employment_insurance: number
   income_tax: number
   local_income_tax: number
-
   total_deductions: number
   gross_pay: number
   net_pay: number
@@ -51,8 +46,15 @@ export interface WageCalculateRequest {
   workplace_employee_count: WorkplaceSize
 
   include_weekly_holiday_pay: boolean
-  attendance_completed: boolean
+  include_overtime_pay: boolean
+  include_night_pay: boolean
+  include_holiday_work_pay: boolean
 
+  daily_meal_allowance: number
+  daily_transport_allowance: number
+  daily_other_allowance: number
+
+  attendance_completed: boolean
   daily_work_hours?: number | null
   weekly_work_days?: number | null
   weekly_work_hours?: number | null
@@ -65,7 +67,6 @@ export interface WageCalculateRequest {
   target_month?: number | null
   reference_date?: string | null
   shifts: WorkShift[]
-
   deductions?: WageDeductionOptions
 }
 
@@ -75,6 +76,7 @@ export interface WageBreakdown {
   overtime_pay: number
   night_pay: number
   holiday_work_pay: number
+  extra_pay: number
   total_pay: number
 }
 
@@ -82,26 +84,19 @@ export interface WageCalculateResponse {
   employment_type: string
   work_mode: WorkMode
   hourly_wage: number
-
   weekly: WageBreakdown
   monthly: WageBreakdown
-
   weekly_holiday_eligible: boolean
   overtime_premium_applied: boolean
   monthly_week_multiplier: number
-
   total_work_hours: number
   total_work_days: number
-
   target_year: number | null
   target_month: number | null
-
   reference_week_start: string | null
   reference_week_end: string | null
-
   deductions?: WageDeductionBreakdown | null
   net_monthly_pay?: number | null
-
   notes: string[]
   disclaimer: string
 }
@@ -122,7 +117,7 @@ export interface WageRecord {
 export const DEFAULT_WAGE_DEDUCTIONS: WageDeductionOptions = {
   national_pension: true,
   health_insurance: true,
-  long_term_care: true,
+  long_term_care: false,
   employment_insurance: true,
   income_tax: true,
   local_income_tax: true,
@@ -140,8 +135,15 @@ export const DEFAULT_WAGE_VALUES: WageCalculateRequest = {
   workplace_employee_count: 'AT_LEAST_5',
 
   include_weekly_holiday_pay: true,
-  attendance_completed: true,
+  include_overtime_pay: true,
+  include_night_pay: true,
+  include_holiday_work_pay: true,
 
+  daily_meal_allowance: 0,
+  daily_transport_allowance: 0,
+  daily_other_allowance: 0,
+
+  attendance_completed: true,
   daily_work_hours: 4,
   weekly_work_days: 5,
   weekly_work_hours: null,
@@ -154,6 +156,5 @@ export const DEFAULT_WAGE_VALUES: WageCalculateRequest = {
   target_month: today.getMonth() + 1,
   reference_date: null,
   shifts: [],
-
   deductions: { ...DEFAULT_WAGE_DEDUCTIONS },
 }

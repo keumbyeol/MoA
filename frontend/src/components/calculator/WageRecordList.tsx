@@ -23,6 +23,7 @@ import { message } from '../common/Message'
 
 interface WageRecordListProps {
   refreshKey?: number
+  onSelectRecord?: (record: WageRecord) => void
 }
 
 const formatWon = (value?: number | null) =>
@@ -58,6 +59,7 @@ const deductionLabels: {
 
 export default function WageRecordList({
   refreshKey = 0,
+  onSelectRecord,
 }: WageRecordListProps) {
   const [records, setRecords] = useState<WageRecord[]>([])
   const [loading, setLoading] = useState(true)
@@ -256,6 +258,7 @@ export default function WageRecordList({
               ['연장근로수당', breakdown?.overtime_pay],
               ['야간근로수당', breakdown?.night_pay],
               ['휴일근로수당', breakdown?.holiday_work_pay],
+              ['부가 수입 (식대·교통비·기타)', breakdown?.extra_pay],
             ] as const
 
             return (
@@ -449,7 +452,17 @@ export default function WageRecordList({
                       </p>
                     )}
 
-                    <div className="mt-5 flex justify-end">
+                     <div className="mt-5 flex flex-wrap justify-end gap-2">
+                       {onSelectRecord && (
+                         <button
+                           type="button"
+                           onClick={() => onSelectRecord(record)}
+                           className="flex items-center gap-2 rounded-lg border border-[#B5D596] bg-[#EAF4DA] px-4 py-2 text-[13px] font-semibold text-[#56852B] hover:bg-[#DDEFC7]"
+                         >
+                           <CalendarDays size={15} />
+                           이 근무 조건 불러오기
+                         </button>
+                       )}
                       <button
                         type="button"
                         disabled={
