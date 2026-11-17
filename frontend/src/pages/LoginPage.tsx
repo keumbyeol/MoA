@@ -36,15 +36,18 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
+  // 기본 로그인 이동 경로는 메인 홈페이지
+  // 보호된 페이지에서 로그인으로 이동한 경우에는 원래 페이지로 복귀
   const redirectPath =
     (location.state as {
       from?: { pathname?: string }
-    } | null)?.from?.pathname ?? '/calculator'
+    } | null)?.from?.pathname ?? '/'
 
   if (isLoading) return null
 
+  // 이미 로그인한 사용자는 메인 홈페이지로 이동
   if (isAuthenticated) {
-    return <Navigate to="/calculator" replace />
+    return <Navigate to="/" replace />
   }
 
   const handleSubmit = async (
@@ -162,7 +165,7 @@ export default function LoginPage() {
             </span>
           </div>
 
-          {/* 연두색 로그인 버튼 */}
+          {/* 로그인 버튼 */}
           <button
             type="submit"
             disabled={submitting}
@@ -191,11 +194,14 @@ export default function LoginPage() {
           </Link>
         </div>
 
-        {/* 비회원 이동: 메인 화면 구현 후 연결 */}
+        {/* 비회원으로 메인 홈페이지 이동 */}
         <div className="mt-24 text-center">
-          <span className="text-xs text-ink-muted">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-ink-muted transition-colors hover:text-primary-dark hover:underline"
+          >
             비회원으로 둘러보기 &gt;
-          </span>
+          </Link>
         </div>
       </div>
     </AuthLayout>

@@ -1,10 +1,10 @@
-
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 import ProtectedRoute from '../components/auth/ProtectedRoute'
 import MainLayout from '../components/layout/MainLayout'
 
 // 페이지
+import HomePage from '../pages/HomePage'
 import LoginPage from '../pages/LoginPage'
 import SignupPage from '../pages/SignupPage'
 import CalculatorPage from '../pages/CalculatorPage'
@@ -15,12 +15,6 @@ import NotFoundPage from '../pages/NotFoundPage'
 export default function AppRouter() {
   return (
     <Routes>
-      {/* 기본 경로 */}
-      <Route
-        path="/"
-        element={<Navigate to="/calculator" replace />}
-      />
-
       {/* 로그인 및 회원가입 */}
       <Route
         path="/login"
@@ -34,6 +28,12 @@ export default function AppRouter() {
 
       {/* 공통 레이아웃 */}
       <Route element={<MainLayout />}>
+
+        {/* 메인 홈페이지 - 비회원 접근 가능 */}
+        <Route
+          path="/"
+          element={<HomePage />}
+        />
 
         {/* 금융정보 가이드 - 비회원 접근 가능 */}
         <Route
