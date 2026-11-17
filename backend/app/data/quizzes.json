@@ -1,0 +1,2192 @@
+[
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "최저임금제도의 기본 목적에 가장 가까운 것은 무엇인가요?",
+    "options": [
+      {
+        "text": "근로자의 임금 최저 수준을 보장한다.",
+        "is_correct": true
+      },
+      {
+        "text": "모든 근로자의 임금을 동일하게 정한다.",
+        "is_correct": false
+      },
+      {
+        "text": "기업의 판매가격을 통제한다.",
+        "is_correct": false
+      },
+      {
+        "text": "근로자의 연봉 상한을 정한다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "최저임금제도는 임금의 최저 수준을 정하여 근로자의 생활 안정 등을 도모하는 제도입니다.",
+    "source_title": "최저임금법 제1조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "최저임금보다 낮은 임금을 정한 근로계약의 해당 부분은 원칙적으로 어떻게 되나요?",
+    "options": [
+      {
+        "text": "근로자가 서명했으므로 유효하다.",
+        "is_correct": false
+      },
+      {
+        "text": "해당 부분은 무효이며 최저임금액을 적용한다.",
+        "is_correct": true
+      },
+      {
+        "text": "사업주가 동의하면 그대로 유효하다.",
+        "is_correct": false
+      },
+      {
+        "text": "수습 여부와 무관하게 언제나 계약 전체가 무효다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "최저임금법 제6조에 따라 최저임금에 미달하는 임금을 정한 부분은 무효이며 최저임금액을 지급하기로 한 것으로 봅니다. 법정 적용 제외·감액 요건은 별도 검토 대상입니다.",
+    "source_title": "최저임금법 제6조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "근로계약을 체결할 때 서면으로 명시해 근로자에게 교부해야 하는 사항에 해당하는 것은?",
+    "options": [
+      {
+        "text": "회사의 광고 예산",
+        "is_correct": false
+      },
+      {
+        "text": "임금의 구성항목·계산방법·지급방법",
+        "is_correct": true
+      },
+      {
+        "text": "동료 직원의 연봉",
+        "is_correct": false
+      },
+      {
+        "text": "사업주의 개인 재산",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제17조는 임금의 구성항목·계산방법·지급방법 등 주요 근로조건의 서면 명시와 교부를 규정합니다.",
+    "source_title": "근로기준법 제17조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "근로기준법상 임금 지급의 원칙에 해당하지 않는 것은?",
+    "options": [
+      {
+        "text": "통화로 지급",
+        "is_correct": false
+      },
+      {
+        "text": "근로자에게 직접 지급",
+        "is_correct": false
+      },
+      {
+        "text": "전액 지급이 원칙",
+        "is_correct": false
+      },
+      {
+        "text": "상품권으로 전액 지급이 원칙",
+        "is_correct": true
+      }
+    ],
+    "explanation": "임금은 원칙적으로 통화로 직접 전액 지급해야 합니다. 법령·단체협약 등에서 인정되는 예외가 있습니다.",
+    "source_title": "근로기준법 제43조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "임금을 정기적으로 지급할 때 근로기준법상 원칙은 무엇인가요?",
+    "options": [
+      {
+        "text": "매월 1회 이상 일정한 날짜에 지급",
+        "is_correct": true
+      },
+      {
+        "text": "사업주가 원하는 때에만 지급",
+        "is_correct": false
+      },
+      {
+        "text": "반년에 한 번 지급",
+        "is_correct": false
+      },
+      {
+        "text": "퇴사할 때 한꺼번에 지급",
+        "is_correct": false
+      }
+    ],
+    "explanation": "임금은 원칙적으로 매월 1회 이상 일정한 날짜를 정해 지급해야 합니다.",
+    "source_title": "근로기준법 제43조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "주휴일을 설명한 것으로 가장 적절한 것은?",
+    "options": [
+      {
+        "text": "매주 반드시 일요일로 정해야 한다.",
+        "is_correct": false
+      },
+      {
+        "text": "법정 요건을 충족하는 근로자에게 부여하는 유급휴일이다.",
+        "is_correct": true
+      },
+      {
+        "text": "연차휴가와 동일한 제도이다.",
+        "is_correct": false
+      },
+      {
+        "text": "사업주가 원하면 무급으로만 운영한다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제55조는 일정 요건을 충족하는 근로자에게 1주에 평균 1회 이상의 유급휴일을 보장하도록 규정합니다. 주휴일이 반드시 일요일일 필요는 없습니다.",
+    "source_title": "근로기준법 제55조 및 시행령 제30조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "근로기준법상 연차유급휴가의 기본 성격은 무엇인가요?",
+    "options": [
+      {
+        "text": "급여가 없는 휴가",
+        "is_correct": false
+      },
+      {
+        "text": "법정 요건을 충족하면 부여되는 유급휴가",
+        "is_correct": true
+      },
+      {
+        "text": "사업주만 사용할 수 있는 휴가",
+        "is_correct": false
+      },
+      {
+        "text": "모든 근로자에게 무조건 연 30일 부여되는 휴가",
+        "is_correct": false
+      }
+    ],
+    "explanation": "연차유급휴가는 근로기준법 제60조의 요건을 충족한 근로자에게 부여하는 유급휴가입니다.",
+    "source_title": "근로기준법 제60조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "근로자가 퇴직한 경우 임금 등 금품을 지급해야 하는 원칙적인 기한은?",
+    "options": [
+      {
+        "text": "퇴직일부터 3일 이내",
+        "is_correct": false
+      },
+      {
+        "text": "퇴직일부터 7일 이내",
+        "is_correct": false
+      },
+      {
+        "text": "퇴직일부터 14일 이내",
+        "is_correct": true
+      },
+      {
+        "text": "퇴직일부터 60일 이내",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제36조에 따라 원칙적으로 퇴직일부터 14일 이내에 지급해야 하며, 특별한 사정이 있으면 당사자 간 합의로 기일을 연장할 수 있습니다.",
+    "source_title": "근로기준법 제36조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "급여명세서를 확인하는 가장 적절한 이유는 무엇인가요?",
+    "options": [
+      {
+        "text": "동료의 계좌번호를 확인하려고",
+        "is_correct": false
+      },
+      {
+        "text": "임금 항목과 공제 내역을 확인하려고",
+        "is_correct": true
+      },
+      {
+        "text": "사업주의 신용등급을 확인하려고",
+        "is_correct": false
+      },
+      {
+        "text": "회사 매출액을 확인하려고",
+        "is_correct": false
+      }
+    ],
+    "explanation": "임금명세서는 지급된 임금의 구성항목·계산방법·공제 내역 등을 확인하는 데 도움이 됩니다.",
+    "source_title": "근로기준법 제48조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "국민연금 제도의 기본 목적에 가장 가까운 것은?",
+    "options": [
+      {
+        "text": "노후 등 소득 감소 위험에 대비한다.",
+        "is_correct": true
+      },
+      {
+        "text": "모든 의료비를 전액 보상한다.",
+        "is_correct": false
+      },
+      {
+        "text": "실직한 날의 임금을 즉시 지급한다.",
+        "is_correct": false
+      },
+      {
+        "text": "개인의 신용점수를 높인다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "국민연금은 노령·장애·사망 등으로 소득이 감소할 위험에 대비하는 사회보험 제도입니다.",
+    "source_title": "국민연금법 제1조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "건강보험이 주로 보장하는 위험은 무엇인가요?",
+    "options": [
+      {
+        "text": "질병·부상 등에 따른 의료비 부담",
+        "is_correct": true
+      },
+      {
+        "text": "주식 투자 손실",
+        "is_correct": false
+      },
+      {
+        "text": "휴대전화 분실",
+        "is_correct": false
+      },
+      {
+        "text": "자동차 수리비 전액",
+        "is_correct": false
+      }
+    ],
+    "explanation": "국민건강보험은 질병·부상 등에 대한 보험급여를 통해 국민의 건강과 사회보장을 지원합니다.",
+    "source_title": "국민건강보험법 제1조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "고용보험의 주요 기능에 해당하는 것은?",
+    "options": [
+      {
+        "text": "실업에 따른 생활 안정 및 재취업 지원",
+        "is_correct": true
+      },
+      {
+        "text": "모든 예금의 수익률 보장",
+        "is_correct": false
+      },
+      {
+        "text": "주택 매매가격 보장",
+        "is_correct": false
+      },
+      {
+        "text": "의료비 전액 무조건 환급",
+        "is_correct": false
+      }
+    ],
+    "explanation": "고용보험은 실업 예방, 고용 촉진, 직업능력 개발 및 실업급여 등을 통한 생활 안정을 지원합니다.",
+    "source_title": "고용보험법 제1조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "실업급여 중 구직급여를 이해한 설명으로 적절한 것은?",
+    "options": [
+      {
+        "text": "실직하면 조건 없이 누구나 자동 지급된다.",
+        "is_correct": false
+      },
+      {
+        "text": "일정한 수급 요건을 충족한 실직자의 재취업 활동을 지원한다.",
+        "is_correct": true
+      },
+      {
+        "text": "재직 중인 모든 근로자에게 매달 지급된다.",
+        "is_correct": false
+      },
+      {
+        "text": "회사가 임의로 정하는 상여금이다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "구직급여는 고용보험 가입 이력, 이직 사유, 구직활동 등 법정 수급 요건을 충족해야 지급될 수 있습니다.",
+    "source_title": "고용보험법 제40조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "근로소득에 대한 원천징수를 설명한 것으로 옳은 것은?",
+    "options": [
+      {
+        "text": "근로자가 회사 대신 모든 세금을 계산한다.",
+        "is_correct": false
+      },
+      {
+        "text": "급여 지급자가 관련 세액을 미리 징수하여 납부한다.",
+        "is_correct": true
+      },
+      {
+        "text": "세금을 반드시 현금으로만 낸다.",
+        "is_correct": false
+      },
+      {
+        "text": "원천징수하면 연말정산이 법적으로 금지된다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "원천징수는 소득 지급자가 법에 따라 세액을 징수해 납부하는 제도입니다.",
+    "source_title": "소득세법 제127조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "연말정산의 주요 목적은 무엇인가요?",
+    "options": [
+      {
+        "text": "한 해 근로소득의 최종 세액과 이미 원천징수한 세액을 정산한다.",
+        "is_correct": true
+      },
+      {
+        "text": "근로자의 모든 대출을 자동 상환한다.",
+        "is_correct": false
+      },
+      {
+        "text": "모든 근로자에게 같은 환급액을 지급한다.",
+        "is_correct": false
+      },
+      {
+        "text": "국민연금 가입을 해지한다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "연말정산은 근로소득의 연간 세액을 계산하고 기납부 세액과 비교해 추가 납부 또는 환급을 정산하는 절차입니다.",
+    "source_title": "소득세법 제137조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "소득공제와 세액공제의 차이로 옳은 것은?",
+    "options": [
+      {
+        "text": "소득공제는 과세표준 계산에 영향을 주고 세액공제는 산출세액에서 차감한다.",
+        "is_correct": true
+      },
+      {
+        "text": "둘 다 은행 이자율을 낮춘다.",
+        "is_correct": false
+      },
+      {
+        "text": "소득공제는 세액을 직접 차감하고 세액공제는 급여를 늘린다.",
+        "is_correct": false
+      },
+      {
+        "text": "둘은 법적으로 완전히 같은 용어이다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "소득공제는 과세표준 산정 과정에서 소득을 줄이는 방식이고, 세액공제는 계산된 세금에서 일정 금액을 차감하는 방식입니다.",
+    "source_title": "소득세법 소득공제·세액공제 규정",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "세전 급여와 실수령액의 관계를 설명한 것으로 가장 적절한 것은?",
+    "options": [
+      {
+        "text": "실수령액은 언제나 세전 급여보다 크다.",
+        "is_correct": false
+      },
+      {
+        "text": "실수령액은 세전 급여에서 세금·사회보험료 등 공제액을 반영한 금액이다.",
+        "is_correct": true
+      },
+      {
+        "text": "세전 급여와 실수령액은 반드시 같다.",
+        "is_correct": false
+      },
+      {
+        "text": "실수령액은 회사 매출에만 따라 정해진다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "급여에서 법정 세금·사회보험료 등 공제액이 반영되므로 세전 급여와 실제 입금액이 다를 수 있습니다.",
+    "source_title": "근로기준법 제48조 및 소득세법 원천징수 규정",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "적금과 보통예금의 일반적인 차이를 설명한 것으로 적절한 것은?",
+    "options": [
+      {
+        "text": "적금은 보통 정해진 방식으로 돈을 납입해 모으는 상품이다.",
+        "is_correct": true
+      },
+      {
+        "text": "적금은 원금 손실이 반드시 발생한다.",
+        "is_correct": false
+      },
+      {
+        "text": "보통예금은 입출금이 법적으로 전면 금지된다.",
+        "is_correct": false
+      },
+      {
+        "text": "적금은 세금이 전혀 발생하지 않는다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "적금은 통상 일정 기간 정해진 방식으로 납입하여 목돈을 모으는 예금상품이며, 세부 조건은 상품약관에 따라 달라집니다.",
+    "source_title": "금융감독원 금융교육: 예금·적금 기본 개념",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "예금 금리에서 연 3%라는 표현의 일반적인 의미는?",
+    "options": [
+      {
+        "text": "매달 원금의 3%가 무조건 지급된다.",
+        "is_correct": false
+      },
+      {
+        "text": "1년을 기준으로 표시한 이자율이다.",
+        "is_correct": true
+      },
+      {
+        "text": "원금이 3배가 된다는 뜻이다.",
+        "is_correct": false
+      },
+      {
+        "text": "3년마다 반드시 이자가 지급된다는 뜻이다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "연 이자율은 1년을 기준으로 표시한 비율입니다. 실제 이자는 예치기간, 계산방식, 세금 등에 따라 달라집니다.",
+    "source_title": "금융감독원 금융교육: 이자율 개념",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "금융상품에 가입하기 전에 가장 먼저 확인할 사항으로 적절한 것은?",
+    "options": [
+      {
+        "text": "광고 이미지의 색상",
+        "is_correct": false
+      },
+      {
+        "text": "금리·수수료·중도해지 조건 등 상품약관",
+        "is_correct": true
+      },
+      {
+        "text": "직원 개인의 투자 수익",
+        "is_correct": false
+      },
+      {
+        "text": "친구가 쓰는 휴대전화 기종",
+        "is_correct": false
+      }
+    ],
+    "explanation": "금융상품은 금리뿐 아니라 수수료, 만기, 중도해지 조건, 예금자보호 여부 등 주요 조건을 확인해야 합니다.",
+    "source_title": "금융감독원 금융소비자정보: 금융상품 비교",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "OX",
+    "question_text": "근로계약서에 최저임금보다 낮은 시급을 적었다면, 근로자가 서명했더라도 최저임금에 미달하는 임금 약정 부분은 원칙적으로 무효이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "최저임금법 제6조에 따라 최저임금에 미달하는 임금 약정 부분은 무효입니다. 법정 예외는 별도로 판단합니다.",
+    "source_title": "최저임금법 제6조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "OX",
+    "question_text": "주휴일은 법적으로 반드시 일요일로 정해야 한다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "주휴일은 반드시 일요일일 필요가 없으며, 법정 요건에 따라 1주 평균 1회 이상의 유급휴일을 보장해야 합니다.",
+    "source_title": "근로기준법 제55조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "OX",
+    "question_text": "임금은 원칙적으로 근로자에게 직접 지급해야 한다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제43조는 임금 직접 지급 원칙을 규정합니다.",
+    "source_title": "근로기준법 제43조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "OX",
+    "question_text": "근로기준법상 임금은 원칙적으로 6개월에 한 번만 지급해도 된다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "임금은 원칙적으로 매월 1회 이상 일정한 날짜에 지급해야 합니다.",
+    "source_title": "근로기준법 제43조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "OX",
+    "question_text": "국민연금은 노후 소득 보장과 관련된 사회보험 제도이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "국민연금은 노령 등으로 소득이 줄어드는 위험에 대비하는 제도입니다.",
+    "source_title": "국민연금법 제1조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "OX",
+    "question_text": "건강보험은 주식 투자에서 발생한 손실을 보상하기 위한 보험이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "건강보험은 질병·부상 등에 대한 의료보장을 위한 사회보험입니다.",
+    "source_title": "국민건강보험법 제1조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "OX",
+    "question_text": "연말정산을 하면 모든 근로자가 반드시 세금을 환급받는다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "이미 낸 세액과 최종 세액을 비교하므로 환급받을 수도 있고 추가 납부할 수도 있습니다.",
+    "source_title": "소득세법 제137조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "OX",
+    "question_text": "급여에서 원천징수된 세금은 연말정산 시 정산 대상이 될 수 있다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로소득세 원천징수액은 연말정산에서 결정세액과 비교하여 정산합니다.",
+    "source_title": "소득세법 제137조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "OX",
+    "question_text": "실업급여는 퇴사한 모든 사람에게 별도 요건 없이 지급된다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "구직급여에는 피보험 단위기간, 이직 사유, 재취업 노력 등 법정 요건이 있습니다.",
+    "source_title": "고용보험법 제40조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 1,
+    "question_type": "OX",
+    "question_text": "예금상품의 실제 이자 수령액은 예치기간과 세금 등에 따라 달라질 수 있다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "연 이자율이 같아도 기간과 이자 계산방식, 원천징수 등에 따라 실수령 이자가 달라질 수 있습니다.",
+    "source_title": "금융감독원 금융교육: 예금 이자",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "시급 12,000원으로 실제 근로 6시간을 했다면, 별도 수당과 공제를 제외한 기본 임금은 얼마인가요?",
+    "options": [
+      {
+        "text": "60,000원",
+        "is_correct": false
+      },
+      {
+        "text": "72,000원",
+        "is_correct": true
+      },
+      {
+        "text": "84,000원",
+        "is_correct": false
+      },
+      {
+        "text": "96,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "12,000원 × 6시간 = 72,000원입니다.",
+    "source_title": "기본 임금 산술 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "시급 11,000원으로 하루 5시간씩 4일 일했다면, 주휴수당 등 별도 수당을 제외한 실제 근로시간분 임금은?",
+    "options": [
+      {
+        "text": "165,000원",
+        "is_correct": false
+      },
+      {
+        "text": "200,000원",
+        "is_correct": false
+      },
+      {
+        "text": "220,000원",
+        "is_correct": true
+      },
+      {
+        "text": "264,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "총 근로시간은 5시간 × 4일 = 20시간이고, 기본 임금은 20시간 × 11,000원 = 220,000원입니다.",
+    "source_title": "기본 임금 산술 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "1주 소정근로시간이 10시간인 근로자는 근로기준법 제18조의 주휴일 규정 적용과 관련해 어떻게 판단하나요?",
+    "options": [
+      {
+        "text": "소정근로시간이 15시간 미만이므로 제55조가 적용되지 않는다.",
+        "is_correct": true
+      },
+      {
+        "text": "일요일에 근무하면 무조건 주휴수당이 발생한다.",
+        "is_correct": false
+      },
+      {
+        "text": "월급제로 계약하면 반드시 주휴수당이 발생한다.",
+        "is_correct": false
+      },
+      {
+        "text": "근속 1개월이 지나면 무조건 주휴수당이 발생한다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "4주 평균(4주 미만 근로자는 해당 기간) 1주 소정근로시간이 15시간 미만이면 근로기준법 제55조의 주휴일 규정이 적용되지 않습니다.",
+    "source_title": "근로기준법 제18조 제3항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 법정 가산수당 대상인 연장근로 2시간을 했고 통상시급이 10,000원이라면, 해당 2시간의 임금(기본분 포함)은?",
+    "options": [
+      {
+        "text": "20,000원",
+        "is_correct": false
+      },
+      {
+        "text": "25,000원",
+        "is_correct": false
+      },
+      {
+        "text": "30,000원",
+        "is_correct": true
+      },
+      {
+        "text": "40,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "연장근로 가산율 50%를 적용하면 10,000원 × 2시간 × 1.5 = 30,000원입니다. 다른 가산 사유의 중복은 없다고 가정합니다.",
+    "source_title": "근로기준법 제56조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 오후 10시부터 오전 6시 사이에 근로하면 원칙적으로 어떤 가산임금 규정이 적용되나요?",
+    "options": [
+      {
+        "text": "야간근로에 대해 통상임금의 50% 이상 가산",
+        "is_correct": true
+      },
+      {
+        "text": "야간근로에 대해 통상임금의 10% 감액",
+        "is_correct": false
+      },
+      {
+        "text": "야간근로에 대해 임금 지급 의무 없음",
+        "is_correct": false
+      },
+      {
+        "text": "야간근로에 대해 무조건 200% 가산",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제56조는 오후 10시부터 오전 6시 사이의 야간근로에 대해 통상임금의 50% 이상을 가산하도록 정합니다.",
+    "source_title": "근로기준법 제56조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 휴일근로가 8시간 이내인 경우, 법정 휴일근로 가산율은 통상임금의 얼마 이상인가요?",
+    "options": [
+      {
+        "text": "10%",
+        "is_correct": false
+      },
+      {
+        "text": "25%",
+        "is_correct": false
+      },
+      {
+        "text": "50%",
+        "is_correct": true
+      },
+      {
+        "text": "100%",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제56조는 8시간 이내의 휴일근로에 통상임금의 50% 이상을 가산하도록 정합니다.",
+    "source_title": "근로기준법 제56조 제2항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 휴일근로가 8시간을 초과한 부분의 법정 휴일근로 가산율은 통상임금의 얼마 이상인가요?",
+    "options": [
+      {
+        "text": "25%",
+        "is_correct": false
+      },
+      {
+        "text": "50%",
+        "is_correct": false
+      },
+      {
+        "text": "75%",
+        "is_correct": false
+      },
+      {
+        "text": "100%",
+        "is_correct": true
+      }
+    ],
+    "explanation": "근로기준법 제56조는 8시간을 초과한 휴일근로에 통상임금의 100% 이상을 가산하도록 정합니다.",
+    "source_title": "근로기준법 제56조 제2항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "법정 근로시간 계산에서 휴게시간은 원칙적으로 어떻게 취급하나요?",
+    "options": [
+      {
+        "text": "근로시간에 반드시 포함한다.",
+        "is_correct": false
+      },
+      {
+        "text": "근로시간에서 제외한다.",
+        "is_correct": true
+      },
+      {
+        "text": "연장근로시간에만 포함한다.",
+        "is_correct": false
+      },
+      {
+        "text": "휴일근로시간에만 포함한다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제50조 제3항에 따라 근로시간 산정 시 사용자의 지휘·감독 아래 있는 대기시간 등은 근로시간으로 보지만, 자유롭게 이용하는 휴게시간은 원칙적으로 제외됩니다.",
+    "source_title": "근로기준법 제50조·제54조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "근로시간이 4시간인 경우 근로기준법상 근로시간 도중에 주어야 하는 최소 휴게시간은?",
+    "options": [
+      {
+        "text": "10분",
+        "is_correct": false
+      },
+      {
+        "text": "20분",
+        "is_correct": false
+      },
+      {
+        "text": "30분",
+        "is_correct": true
+      },
+      {
+        "text": "60분",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로시간이 4시간이면 30분 이상, 8시간이면 1시간 이상의 휴게시간을 근로시간 도중에 부여해야 합니다.",
+    "source_title": "근로기준법 제54조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "근로시간이 8시간인 경우 근로기준법상 근로시간 도중에 주어야 하는 최소 휴게시간은?",
+    "options": [
+      {
+        "text": "30분",
+        "is_correct": false
+      },
+      {
+        "text": "40분",
+        "is_correct": false
+      },
+      {
+        "text": "50분",
+        "is_correct": false
+      },
+      {
+        "text": "60분",
+        "is_correct": true
+      }
+    ],
+    "explanation": "근로기준법 제54조에 따라 근로시간 8시간에는 1시간 이상의 휴게시간이 필요합니다.",
+    "source_title": "근로기준법 제54조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 1년간 80% 이상 출근한 근로자에게 근로기준법상 원칙적으로 부여하는 연차유급휴가는?",
+    "options": [
+      {
+        "text": "5일",
+        "is_correct": false
+      },
+      {
+        "text": "10일",
+        "is_correct": false
+      },
+      {
+        "text": "15일",
+        "is_correct": true
+      },
+      {
+        "text": "20일",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제60조 제1항은 1년간 80% 이상 출근한 근로자에게 15일의 유급휴가를 부여하도록 합니다.",
+    "source_title": "근로기준법 제60조 제1항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 계속 근로기간 1년 미만인 근로자가 1개월 개근한 경우 발생하는 연차유급휴가는?",
+    "options": [
+      {
+        "text": "1일",
+        "is_correct": true
+      },
+      {
+        "text": "2일",
+        "is_correct": false
+      },
+      {
+        "text": "3일",
+        "is_correct": false
+      },
+      {
+        "text": "5일",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제60조 제2항에 따라 계속 근로기간 1년 미만인 근로자는 1개월 개근 시 1일의 유급휴가가 발생합니다.",
+    "source_title": "근로기준법 제60조 제2항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "근로자가 퇴직했는데 사업주가 특별한 사정에 따른 합의 없이 임금 지급을 30일 뒤로 미루겠다고 일방적으로 통보했다면?",
+    "options": [
+      {
+        "text": "정기 급여일이면 언제나 허용된다.",
+        "is_correct": false
+      },
+      {
+        "text": "퇴직일부터 14일 이내 지급 원칙에 어긋날 수 있다.",
+        "is_correct": true
+      },
+      {
+        "text": "근로자가 1년 미만 근무했으면 언제나 허용된다.",
+        "is_correct": false
+      },
+      {
+        "text": "문자 통보만 하면 법정 기한이 자동 연장된다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제36조는 퇴직일부터 14일 이내 지급을 원칙으로 하며, 특별한 사정이 있는 경우 당사자 간 합의로 기일을 연장할 수 있습니다.",
+    "source_title": "근로기준법 제36조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "급여에서 소득세가 원천징수되었다면 연말정산 결과로 가능한 것은?",
+    "options": [
+      {
+        "text": "환급만 가능하다.",
+        "is_correct": false
+      },
+      {
+        "text": "추가 납부만 가능하다.",
+        "is_correct": false
+      },
+      {
+        "text": "환급 또는 추가 납부가 모두 가능하다.",
+        "is_correct": true
+      },
+      {
+        "text": "정산 결과가 나올 수 없다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "연말정산은 결정세액과 이미 원천징수한 세액을 비교하므로 차이에 따라 환급 또는 추가 납부가 발생할 수 있습니다.",
+    "source_title": "소득세법 제137조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "과세표준이 1,000만 원이고 단일 세율 10%만 적용하며 공제·가산이 없다고 가정하면 산출세액은?",
+    "options": [
+      {
+        "text": "10만 원",
+        "is_correct": false
+      },
+      {
+        "text": "50만 원",
+        "is_correct": false
+      },
+      {
+        "text": "100만 원",
+        "is_correct": true
+      },
+      {
+        "text": "1,000만 원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "가정한 단일 세율을 적용하면 1,000만 원 × 10% = 100만 원입니다. 실제 소득세는 누진세율·공제 등이 적용될 수 있습니다.",
+    "source_title": "세액 계산 연습용 가상 조건",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "산출세액이 50만 원이고 적용 가능한 세액공제가 10만 원이며 다른 조정이 없다고 가정하면 공제 후 세액은?",
+    "options": [
+      {
+        "text": "10만 원",
+        "is_correct": false
+      },
+      {
+        "text": "40만 원",
+        "is_correct": true
+      },
+      {
+        "text": "50만 원",
+        "is_correct": false
+      },
+      {
+        "text": "60만 원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "50만 원에서 세액공제 10만 원을 차감하면 40만 원입니다.",
+    "source_title": "세액공제 산술 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "월급 250만 원에서 소득세 5만 원, 사회보험료 20만 원만 공제한다면 실수령액은?",
+    "options": [
+      {
+        "text": "220만 원",
+        "is_correct": false
+      },
+      {
+        "text": "225만 원",
+        "is_correct": true
+      },
+      {
+        "text": "230만 원",
+        "is_correct": false
+      },
+      {
+        "text": "245만 원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "250만 원 − 5만 원 − 20만 원 = 225만 원입니다. 제시된 금액은 계산 연습을 위한 가정입니다.",
+    "source_title": "급여 실수령액 산술 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "100만 원을 연 3% 단리로 정확히 1년 예치하고 세금·수수료가 없다고 가정하면 이자는?",
+    "options": [
+      {
+        "text": "3,000원",
+        "is_correct": false
+      },
+      {
+        "text": "30,000원",
+        "is_correct": true
+      },
+      {
+        "text": "60,000원",
+        "is_correct": false
+      },
+      {
+        "text": "300,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "1,000,000원 × 0.03 × 1년 = 30,000원입니다.",
+    "source_title": "단리 이자 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "매월 말 10만 원씩 6개월 납입하는 적금에서 이자를 제외한 총 납입원금은?",
+    "options": [
+      {
+        "text": "40만 원",
+        "is_correct": false
+      },
+      {
+        "text": "50만 원",
+        "is_correct": false
+      },
+      {
+        "text": "60만 원",
+        "is_correct": true
+      },
+      {
+        "text": "70만 원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "10만 원 × 6회 = 60만 원입니다.",
+    "source_title": "적금 납입원금 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "연 4%와 연 3%인 두 예금상품을 비교할 때 실제 수령액을 정확히 판단하려면 무엇을 추가로 확인해야 하나요?",
+    "options": [
+      {
+        "text": "상품의 로고 색상",
+        "is_correct": false
+      },
+      {
+        "text": "이자 계산방식·예치기간·세금·우대금리 조건",
+        "is_correct": true
+      },
+      {
+        "text": "광고 모델의 인지도",
+        "is_correct": false
+      },
+      {
+        "text": "은행 지점의 간판 크기",
+        "is_correct": false
+      }
+    ],
+    "explanation": "표시 금리 외에도 예치기간, 단리·복리 여부, 우대조건, 세금 등을 확인해야 실제 이자를 비교할 수 있습니다.",
+    "source_title": "금융감독원 금융교육: 예금상품 비교",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "OX",
+    "question_text": "근로기준법 제18조 제3항에 따라 4주 평균 1주 소정근로시간이 15시간 미만인 근로자에게는 제55조의 주휴일 규정이 적용되지 않는다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "단시간근로자의 소정근로시간이 해당 기준에 미달하면 제55조와 제60조가 적용되지 않습니다.",
+    "source_title": "근로기준법 제18조 제3항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "OX",
+    "question_text": "근로시간 8시간인 근로자에게 근로시간 도중 30분만 휴게시간을 주어도 근로기준법 제54조의 최소 기준을 충족한다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "8시간 근로에는 1시간 이상의 휴게시간을 근로시간 도중에 부여해야 합니다.",
+    "source_title": "근로기준법 제54조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "OX",
+    "question_text": "상시 근로자 5명 이상 사업장에서 오후 10시부터 오전 6시 사이의 야간근로에는 원칙적으로 통상임금의 50% 이상을 가산한다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제56조의 야간근로 가산 규정입니다.",
+    "source_title": "근로기준법 제56조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "OX",
+    "question_text": "근로기준법상 퇴직 후 금품 청산 기한은 특별한 사정이 있더라도 당사자 간 합의로 연장할 수 없다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "근로기준법 제36조는 특별한 사정이 있는 경우 당사자 간 합의로 지급 기일을 연장할 수 있도록 합니다.",
+    "source_title": "근로기준법 제36조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "OX",
+    "question_text": "상시 근로자 5명 이상 사업장에서 계속 근로기간이 1년 미만인 근로자가 1개월 개근하면 연차유급휴가 1일이 발생할 수 있다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제60조 제2항은 해당 요건에 따른 1일의 유급휴가를 규정합니다.",
+    "source_title": "근로기준법 제60조 제2항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "OX",
+    "question_text": "근로소득의 연말정산에서 이미 원천징수한 세액이 최종 결정세액보다 많다면 차액을 환급받을 수 있다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "기납부 세액이 결정세액보다 많으면 초과 납부분을 환급받을 수 있습니다.",
+    "source_title": "소득세법 제137조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "OX",
+    "question_text": "단리 연 5%로 100만 원을 1년 예치하면 세전 이자는 50만 원이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "1,000,000원 × 0.05 = 50,000원이므로 5만 원입니다.",
+    "source_title": "단리 이자 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "OX",
+    "question_text": "시급 10,000원으로 실제 근로 8시간을 했다면 별도 수당과 공제를 제외한 기본 임금은 80,000원이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "10,000원 × 8시간 = 80,000원입니다.",
+    "source_title": "기본 임금 산술 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "OX",
+    "question_text": "산출세액이 30만 원이고 적용 가능한 세액공제가 5만 원이며 다른 조정이 없다면 공제 후 세액은 35만 원이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "30만 원 − 5만 원 = 25만 원입니다.",
+    "source_title": "세액공제 산술 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 2,
+    "question_type": "OX",
+    "question_text": "적금에 매월 20만 원씩 5번 납입하면 이자를 제외한 납입원금은 100만 원이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "20만 원 × 5회 = 100만 원입니다.",
+    "source_title": "적금 납입원금 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 통상시급 12,000원인 근로자가 연장근로 3시간을 했습니다. 야간·휴일근로와 겹치지 않고 법정 가산율 50%만 적용하면 해당 3시간 임금은?",
+    "options": [
+      {
+        "text": "36,000원",
+        "is_correct": false
+      },
+      {
+        "text": "42,000원",
+        "is_correct": false
+      },
+      {
+        "text": "54,000원",
+        "is_correct": true
+      },
+      {
+        "text": "72,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "12,000원 × 3시간 × 1.5 = 54,000원입니다.",
+    "source_title": "근로기준법 제56조 및 임금 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 통상시급 10,000원인 근로자가 법정 휴일에 9시간 근로했습니다. 야간 가산은 없고 휴일근로 가산만 적용할 때 총 임금은?",
+    "options": [
+      {
+        "text": "135,000원",
+        "is_correct": false
+      },
+      {
+        "text": "140,000원",
+        "is_correct": true
+      },
+      {
+        "text": "150,000원",
+        "is_correct": false
+      },
+      {
+        "text": "160,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "8시간은 10,000원 × 8 × 1.5 = 120,000원, 초과 1시간은 10,000원 × 1 × 2 = 20,000원으로 총 140,000원입니다.",
+    "source_title": "근로기준법 제56조 제2항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 통상시급 10,000원인 근로자가 법정 야간시간대에 2시간 일했습니다. 연장·휴일 가산은 없고 야간 가산만 적용한다면 해당 2시간 임금은?",
+    "options": [
+      {
+        "text": "20,000원",
+        "is_correct": false
+      },
+      {
+        "text": "25,000원",
+        "is_correct": false
+      },
+      {
+        "text": "30,000원",
+        "is_correct": true
+      },
+      {
+        "text": "40,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "기본분 20,000원과 야간가산 10,000원을 합쳐 30,000원입니다.",
+    "source_title": "근로기준법 제56조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 통상시급 12,000원인 근로자가 휴일근로 6시간을 했습니다. 야간 가산 없이 휴일 가산만 적용하면 총 임금은?",
+    "options": [
+      {
+        "text": "72,000원",
+        "is_correct": false
+      },
+      {
+        "text": "90,000원",
+        "is_correct": false
+      },
+      {
+        "text": "108,000원",
+        "is_correct": true
+      },
+      {
+        "text": "144,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "휴일근로 8시간 이내 가산율 50%를 적용해 12,000원 × 6 × 1.5 = 108,000원입니다.",
+    "source_title": "근로기준법 제56조 제2항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 통상시급 10,000원인 근로자가 휴일에 10시간 일했습니다. 야간 가산 없이 휴일근로 가산만 적용하면 총 임금은?",
+    "options": [
+      {
+        "text": "150,000원",
+        "is_correct": false
+      },
+      {
+        "text": "160,000원",
+        "is_correct": true
+      },
+      {
+        "text": "170,000원",
+        "is_correct": false
+      },
+      {
+        "text": "180,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "8시간 × 10,000원 × 1.5 = 120,000원, 초과 2시간 × 10,000원 × 2 = 40,000원으로 총 160,000원입니다.",
+    "source_title": "근로기준법 제56조 제2항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 통상시급 11,000원인 근로자가 법정 연장근로 2시간을 했습니다. 다른 가산 사유가 없을 때 가산분만 따로 계산하면?",
+    "options": [
+      {
+        "text": "5,500원",
+        "is_correct": false
+      },
+      {
+        "text": "11,000원",
+        "is_correct": true
+      },
+      {
+        "text": "22,000원",
+        "is_correct": false
+      },
+      {
+        "text": "33,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "연장근로 가산분만 계산하면 11,000원 × 2시간 × 0.5 = 11,000원입니다. 기본임금 22,000원은 별도입니다.",
+    "source_title": "근로기준법 제56조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 1년간 출근율이 80% 미만인 근로자가 해당 연도에 1개월 개근한 달이 7개월이라면, 제60조 제2항 기준으로 발생하는 연차휴가는?",
+    "options": [
+      {
+        "text": "0일",
+        "is_correct": false
+      },
+      {
+        "text": "5일",
+        "is_correct": false
+      },
+      {
+        "text": "7일",
+        "is_correct": true
+      },
+      {
+        "text": "15일",
+        "is_correct": false
+      }
+    ],
+    "explanation": "1년간 80% 미만 출근한 근로자는 1개월 개근 시 1일의 유급휴가를 부여받습니다. 제시된 개근 월이 7개월이면 7일입니다.",
+    "source_title": "근로기준법 제60조 제2항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 1년간 80% 이상 출근했고 계속근로기간이 4년인 근로자의 법정 연차휴가 일수는?",
+    "options": [
+      {
+        "text": "15일",
+        "is_correct": false
+      },
+      {
+        "text": "16일",
+        "is_correct": true
+      },
+      {
+        "text": "17일",
+        "is_correct": false
+      },
+      {
+        "text": "18일",
+        "is_correct": false
+      }
+    ],
+    "explanation": "기본 15일에 최초 1년 초과 후 계속근로 2년마다 1일을 가산합니다. 계속근로 4년이면 가산 1일로 16일입니다.",
+    "source_title": "근로기준법 제60조 제1항·제4항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 1년간 80% 이상 출근했고 계속근로기간이 6년인 근로자의 법정 연차휴가 일수는?",
+    "options": [
+      {
+        "text": "15일",
+        "is_correct": false
+      },
+      {
+        "text": "16일",
+        "is_correct": false
+      },
+      {
+        "text": "17일",
+        "is_correct": true
+      },
+      {
+        "text": "18일",
+        "is_correct": false
+      }
+    ],
+    "explanation": "기본 15일에 최초 1년 초과 후 계속근로 2년마다 1일씩 가산하므로 계속근로 6년이면 17일입니다.",
+    "source_title": "근로기준법 제60조 제4항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 1년간 80% 이상 출근한 장기근속자의 연차유급휴가 가산을 포함한 법정 상한은?",
+    "options": [
+      {
+        "text": "20일",
+        "is_correct": false
+      },
+      {
+        "text": "23일",
+        "is_correct": false
+      },
+      {
+        "text": "25일",
+        "is_correct": true
+      },
+      {
+        "text": "30일",
+        "is_correct": false
+      }
+    ],
+    "explanation": "근로기준법 제60조 제4항은 가산휴가를 포함한 총 휴가일수의 상한을 25일로 정합니다.",
+    "source_title": "근로기준법 제60조 제4항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "근로자가 09:00~18:00 사업장에 머물렀고 12:00~13:00은 자유롭게 이용하는 휴게시간이었습니다. 다른 대기시간이 없다면 실제 근로시간은?",
+    "options": [
+      {
+        "text": "7시간",
+        "is_correct": false
+      },
+      {
+        "text": "8시간",
+        "is_correct": true
+      },
+      {
+        "text": "9시간",
+        "is_correct": false
+      },
+      {
+        "text": "10시간",
+        "is_correct": false
+      }
+    ],
+    "explanation": "체류 9시간에서 자유롭게 이용한 휴게 1시간을 제외하면 근로시간은 8시간입니다.",
+    "source_title": "근로기준법 제50조·제54조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 통상시급 10,000원인 근로자가 법정 연장근로 2시간 중 1시간을 야간시간대에 했습니다. 휴일근로는 없고 연장 50%, 야간 50% 가산을 각각 적용할 때 2시간 총 임금은?",
+    "options": [
+      {
+        "text": "25,000원",
+        "is_correct": false
+      },
+      {
+        "text": "30,000원",
+        "is_correct": false
+      },
+      {
+        "text": "35,000원",
+        "is_correct": true
+      },
+      {
+        "text": "40,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "기본분 20,000원 + 연장가산 10,000원 + 야간가산 5,000원 = 35,000원입니다.",
+    "source_title": "근로기준법 제56조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "상시 근로자 5명 이상 사업장에서 통상시급 12,000원인 근로자가 법정 연장근로 4시간을 했고 그중 2시간이 야간근로입니다. 휴일근로는 없을 때 연장·야간 가산을 포함한 4시간 총 임금은?",
+    "options": [
+      {
+        "text": "72,000원",
+        "is_correct": false
+      },
+      {
+        "text": "78,000원",
+        "is_correct": false
+      },
+      {
+        "text": "84,000원",
+        "is_correct": true
+      },
+      {
+        "text": "96,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "기본분 48,000원 + 연장가산 24,000원 + 야간가산 12,000원 = 84,000원입니다.",
+    "source_title": "근로기준법 제56조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "세전 월급 300만 원에서 소득세 8만 원, 지방소득세 8천 원, 사회보험료 27만 원이 공제되고 다른 공제·추가 지급이 없다면 실수령액은?",
+    "options": [
+      {
+        "text": "2,642,000원",
+        "is_correct": true
+      },
+      {
+        "text": "2,652,000원",
+        "is_correct": false
+      },
+      {
+        "text": "2,722,000원",
+        "is_correct": false
+      },
+      {
+        "text": "2,920,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "3,000,000원 − 80,000원 − 8,000원 − 270,000원 = 2,642,000원입니다.",
+    "source_title": "급여 실수령액 산술 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "연말정산에서 결정세액이 42만 원이고 이미 원천징수된 세액이 55만 원이며 다른 조정이 없다면 결과는?",
+    "options": [
+      {
+        "text": "13만 원 추가 납부",
+        "is_correct": false
+      },
+      {
+        "text": "13만 원 환급",
+        "is_correct": true
+      },
+      {
+        "text": "42만 원 환급",
+        "is_correct": false
+      },
+      {
+        "text": "55만 원 추가 납부",
+        "is_correct": false
+      }
+    ],
+    "explanation": "기납부세액 55만 원이 결정세액 42만 원보다 13만 원 많으므로 13만 원 환급입니다.",
+    "source_title": "소득세법 제137조 및 정산 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "연말정산에서 결정세액이 68만 원이고 이미 원천징수된 세액이 50만 원이며 다른 조정이 없다면 결과는?",
+    "options": [
+      {
+        "text": "18만 원 환급",
+        "is_correct": false
+      },
+      {
+        "text": "50만 원 환급",
+        "is_correct": false
+      },
+      {
+        "text": "18만 원 추가 납부",
+        "is_correct": true
+      },
+      {
+        "text": "68만 원 환급",
+        "is_correct": false
+      }
+    ],
+    "explanation": "결정세액 68만 원에서 기납부세액 50만 원을 차감하면 18만 원을 추가 납부합니다.",
+    "source_title": "소득세법 제137조 및 정산 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "과세표준 2,000만 원에 가상의 단일 세율 15%를 적용하고, 산출세액에서 세액공제 40만 원을 차감하며 다른 조정이 없다면 최종 세액은?",
+    "options": [
+      {
+        "text": "220만 원",
+        "is_correct": false
+      },
+      {
+        "text": "260만 원",
+        "is_correct": true
+      },
+      {
+        "text": "300만 원",
+        "is_correct": false
+      },
+      {
+        "text": "340만 원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "2,000만 원 × 15% = 300만 원, 여기서 세액공제 40만 원을 빼면 260만 원입니다. 실제 세법의 세율구조와는 별개인 가상 계산입니다.",
+    "source_title": "가상 세액 계산 연습",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "원금 200만 원을 연 4% 단리로 18개월 예치하고 세금·수수료가 없다면 이자는?",
+    "options": [
+      {
+        "text": "80,000원",
+        "is_correct": false
+      },
+      {
+        "text": "100,000원",
+        "is_correct": false
+      },
+      {
+        "text": "120,000원",
+        "is_correct": true
+      },
+      {
+        "text": "160,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "2,000,000원 × 0.04 × (18/12) = 120,000원입니다.",
+    "source_title": "단리 이자 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "원금 100만 원을 연 10%로 2년간 연 1회 복리 적용하고 세금·수수료가 없다면 만기 원리금은?",
+    "options": [
+      {
+        "text": "1,100,000원",
+        "is_correct": false
+      },
+      {
+        "text": "1,200,000원",
+        "is_correct": false
+      },
+      {
+        "text": "1,210,000원",
+        "is_correct": true
+      },
+      {
+        "text": "1,220,000원",
+        "is_correct": false
+      }
+    ],
+    "explanation": "1,000,000원 × (1.10)^2 = 1,210,000원입니다.",
+    "source_title": "복리 이자 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "MULTIPLE_CHOICE",
+    "question_text": "두 적금 상품 A와 B의 표시 연이율이 각각 4%와 3.8%입니다. 실제 세후 만기 수령액 비교에 필요한 정보로 가장 적절한 것은?",
+    "options": [
+      {
+        "text": "금리만 알면 반드시 A가 더 유리하다.",
+        "is_correct": false
+      },
+      {
+        "text": "납입 시점·우대조건·이자 계산방식·세금 등을 확인해야 한다.",
+        "is_correct": true
+      },
+      {
+        "text": "가입한 은행의 광고 모델만 확인하면 된다.",
+        "is_correct": false
+      },
+      {
+        "text": "상품 이름의 글자 수로 수령액을 계산할 수 있다.",
+        "is_correct": false
+      }
+    ],
+    "explanation": "적금은 납입 시점별 예치기간이 다르므로 표시 금리 외에 납입 방식, 우대조건, 세금 등을 함께 비교해야 합니다.",
+    "source_title": "금융감독원 금융교육: 적금 이자 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "OX",
+    "question_text": "상시 근로자 5명 이상 사업장에서 법정 휴일근로 9시간을 했을 때, 휴일근로 가산율은 9시간 전체에 통상임금의 100%를 적용한다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "8시간 이내는 50% 이상, 8시간을 초과한 부분은 100% 이상 가산합니다.",
+    "source_title": "근로기준법 제56조 제2항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "OX",
+    "question_text": "상시 근로자 5명 이상 사업장에서 연장근로와 야간근로가 겹치면 해당 시간에 연장근로 가산과 야간근로 가산이 함께 적용될 수 있다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "연장근로와 야간근로의 가산 사유가 각각 충족되면 각 가산분을 함께 계산할 수 있습니다.",
+    "source_title": "근로기준법 제56조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "OX",
+    "question_text": "상시 근로자 5명 이상 사업장에서 1년간 80% 이상 출근하고 계속근로기간이 6년인 근로자의 법정 연차휴가 일수는 17일이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "기본 15일에 계속근로에 따른 가산 2일이 더해져 17일입니다.",
+    "source_title": "근로기준법 제60조 제4항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "OX",
+    "question_text": "상시 근로자 5명 이상 사업장에서 계속근로기간이 길어지면 연차유급휴가 일수는 법적 상한 없이 매년 1일씩 증가한다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "근로기준법 제60조 제4항은 가산 방식과 함께 총 25일의 상한을 정합니다.",
+    "source_title": "근로기준법 제60조 제4항",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "OX",
+    "question_text": "자유롭게 이용할 수 있는 1시간 휴게시간은 사업장에 머무른 시간이더라도 원칙적으로 실제 근로시간에서 제외한다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "휴게시간은 근로자가 자유롭게 이용하는 시간이며 원칙적으로 근로시간에서 제외됩니다.",
+    "source_title": "근로기준법 제50조·제54조",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "OX",
+    "question_text": "세전 월급 280만 원에서 세금과 사회보험료를 합해 35만 원 공제하고 다른 지급·공제가 없다면 실수령액은 245만 원이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "280만 원 − 35만 원 = 245만 원입니다.",
+    "source_title": "급여 실수령액 산술 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "OX",
+    "question_text": "연말정산에서 결정세액이 70만 원이고 기납부세액이 90만 원이면 다른 조정이 없을 때 20만 원을 추가 납부한다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "기납부세액이 20만 원 더 많으므로 추가 납부가 아니라 20만 원 환급입니다.",
+    "source_title": "소득세법 제137조 및 정산 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "OX",
+    "question_text": "100만 원을 연 5% 단리로 2년 예치하고 세금·수수료가 없다면 이자는 10만 원이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "1,000,000원 × 0.05 × 2 = 100,000원입니다.",
+    "source_title": "단리 이자 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "OX",
+    "question_text": "100만 원을 연 10%로 2년간 연 1회 복리 적용하면 세금·수수료가 없을 때 원리금은 120만 원이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": false
+      },
+      {
+        "text": "X",
+        "is_correct": true
+      }
+    ],
+    "explanation": "복리 원리금은 1,000,000원 × 1.1 × 1.1 = 1,210,000원입니다.",
+    "source_title": "복리 이자 계산",
+    "source_url": null,
+    "applicable_year": null
+  },
+  {
+    "difficulty": 3,
+    "question_type": "OX",
+    "question_text": "과세표준 1,000만 원에 가상의 단일 세율 10%를 적용하고 세액공제 20만 원을 차감하며 다른 조정이 없다면 최종 세액은 80만 원이다.",
+    "options": [
+      {
+        "text": "O",
+        "is_correct": true
+      },
+      {
+        "text": "X",
+        "is_correct": false
+      }
+    ],
+    "explanation": "산출세액 100만 원에서 세액공제 20만 원을 차감하면 80만 원입니다.",
+    "source_title": "가상 세액 계산 연습",
+    "source_url": null,
+    "applicable_year": null
+  }
+]

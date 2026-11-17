@@ -2,6 +2,7 @@
 from app.models.user import (
     User,
     AuthRefreshToken,
+    WageRecord,
 )
 
 from app.models.financial_guide import (
@@ -21,10 +22,18 @@ from app.models.law import (
     LawArticle,
 )
 
+from app.models.quiz import (
+    QuizQuestion,
+    QuizOption,
+    QuizAttempt,
+    QuizAttemptAnswer,
+)
+
 
 __all__ = [
     "User",
     "AuthRefreshToken",
+    "WageRecord",
     "DataSource",
     "SyncJob",
     "SourceRecord",
@@ -35,4 +44,8 @@ __all__ = [
     "Law",
     "LawVersion",
     "LawArticle",
+    "QuizQuestion",
+    "QuizOption",
+    "QuizAttempt",
+    "QuizAttemptAnswer",
 ]

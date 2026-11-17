@@ -1,4 +1,5 @@
-import { Route, Routes } from 'react-router-dom'
+
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 import ProtectedRoute from '../components/auth/ProtectedRoute'
 import MainLayout from '../components/layout/MainLayout'
@@ -10,11 +11,18 @@ import SignupPage from '../pages/SignupPage'
 import CalculatorPage from '../pages/CalculatorPage'
 import GuidePage from '../pages/GuidePage'
 import GuideDetailPage from '../pages/GuideDetailPage'
+import QuizPage from '../pages/QuizPage'
 import NotFoundPage from '../pages/NotFoundPage'
 
 export default function AppRouter() {
   return (
     <Routes>
+      {/* 최초 접속 시 로그인 페이지로 이동 */}
+      <Route
+        path="/"
+        element={<Navigate to="/login" replace />}
+      />
+
       {/* 로그인 및 회원가입 */}
       <Route
         path="/login"
@@ -28,10 +36,9 @@ export default function AppRouter() {
 
       {/* 공통 레이아웃 */}
       <Route element={<MainLayout />}>
-
         {/* 메인 홈페이지 - 비회원 접근 가능 */}
         <Route
-          path="/"
+          path="/home"
           element={<HomePage />}
         />
 
@@ -47,6 +54,12 @@ export default function AppRouter() {
           element={<GuideDetailPage />}
         />
 
+        {/* 금융 지식 퀴즈 - 비회원 접근 가능 */}
+        <Route
+          path="/quiz"
+          element={<QuizPage />}
+        />
+
         {/* 로그인 필요한 페이지 */}
         <Route element={<ProtectedRoute />}>
           <Route
@@ -60,7 +73,6 @@ export default function AppRouter() {
           path="*"
           element={<NotFoundPage />}
         />
-
       </Route>
     </Routes>
   )

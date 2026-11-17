@@ -8,6 +8,7 @@ from app.routers.guide import router as guide_router
 from app.routers.policy import router as policy_router
 from app.routers.law import router as law_router
 from app.routers.chat import router as chat_router
+from app.routers.quiz import router as quiz_router
 
 
 app = FastAPI(
@@ -35,6 +36,7 @@ app.include_router(guide_router)
 app.include_router(policy_router)
 app.include_router(law_router)
 app.include_router(chat_router)
+app.include_router(quiz_router)
 
 
 @app.get("/")

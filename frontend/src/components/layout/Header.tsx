@@ -17,7 +17,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { message } from '../common/Message'
 
 const menus = [
-  { label: '홈', path: '/', icon: Home },
+  { label: '홈', path: '/home', icon: Home },
   { label: '금융 가이드', path: '/guides' },
   { label: '급여 계산기', path: '/calculator', icon: Calculator },
   { label: '퀴즈', path: '/quiz' },
@@ -82,9 +82,9 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-primary-100 bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex h-[90px] w-full max-w-[1600px] items-center gap-8 px-6 lg:px-12">
-        {/* 이미지 자체에 MOA 글자가 포함되어 있으므로 텍스트 추가하지 않음 */}
+        {/* MOA 로고 */}
         <Link
-          to="/"
+          to="/home"
           aria-label="MOA 홈으로 이동"
           className="flex shrink-0 items-center"
         >
@@ -107,7 +107,7 @@ export default function Header() {
               <NavLink
                 key={item.path}
                 to={item.path}
-                end={item.path === '/'}
+                end={item.path === '/home'}
                 className={({ isActive }) =>
                   [
                     'flex h-[46px] items-center gap-2 whitespace-nowrap rounded-full px-4 text-[16px] font-semibold transition-colors xl:px-5',
@@ -245,6 +245,7 @@ export default function Header() {
         </div>
       </div>
 
+      {/* 모바일 메뉴 목록 */}
       {mobileMenuOpen && (
         <div className="border-t border-primary-100 bg-white px-6 py-4 lg:hidden">
           <nav className="flex flex-col gap-1">
@@ -252,7 +253,7 @@ export default function Header() {
               <NavLink
                 key={item.path}
                 to={item.path}
-                end={item.path === '/'}
+                end={item.path === '/home'}
                 onClick={() => setMobileMenuOpen(false)}
                 className={({ isActive }) =>
                   [
@@ -268,6 +269,7 @@ export default function Header() {
             ))}
           </nav>
 
+          {/* 모바일 검색 */}
           <form onSubmit={handleSearch} className="relative mt-4">
             <Search
               size={18}

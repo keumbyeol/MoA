@@ -36,18 +36,25 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
-  // 기본 로그인 이동 경로는 메인 홈페이지
-  // 보호된 페이지에서 로그인으로 이동한 경우에는 원래 페이지로 복귀
-  const redirectPath =
-    (location.state as {
+  // 기본 로그인 성공 시 메인 홈페이지로 이동
+  // 보호된 페이지에서 로그인으로 이동했다면 원래 페이지로 복귀
+  const fromPath = (
+    location.state as {
       from?: { pathname?: string }
-    } | null)?.from?.pathname ?? '/'
+    } | null
+  )?.from?.pathname
 
+  const redirectPath =
+    fromPath && !['/', '/login', '/signup'].includes(fromPath)
+      ? fromPath
+      : '/home'
+
+  // 인증 상태 확인 중
   if (isLoading) return null
 
   // 이미 로그인한 사용자는 메인 홈페이지로 이동
   if (isAuthenticated) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/home" replace />
   }
 
   const handleSubmit = async (
@@ -69,6 +76,8 @@ export default function LoginPage() {
       })
 
       message.success('로그인되었습니다.')
+
+      // 로그인 성공 후 이동
       navigate(redirectPath, { replace: true })
     } catch (error) {
       message.error(
@@ -197,7 +206,7 @@ export default function LoginPage() {
         {/* 비회원으로 메인 홈페이지 이동 */}
         <div className="mt-24 text-center">
           <Link
-            to="/"
+            to="/home"
             className="inline-flex items-center gap-1 text-xs font-semibold text-ink-muted transition-colors hover:text-primary-dark hover:underline"
           >
             비회원으로 둘러보기 &gt;
