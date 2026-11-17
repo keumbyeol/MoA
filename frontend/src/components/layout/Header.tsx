@@ -20,7 +20,6 @@ const menus = [
   { label: '홈', path: '/', icon: Home },
   { label: '금융 가이드', path: '/guides' },
   { label: '급여 계산기', path: '/calculator', icon: Calculator },
-  { label: 'AI Q&A', path: '/ai' },
   { label: '퀴즈', path: '/quiz' },
 ]
 

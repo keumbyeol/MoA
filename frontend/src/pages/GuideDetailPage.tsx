@@ -1,3 +1,4 @@
+
 import { Link, useParams } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -89,6 +90,7 @@ export default function GuideDetailPage() {
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      {/* 현재 위치 */}
       <nav
         aria-label="현재 위치"
         className="mb-7 flex flex-wrap items-center gap-2 text-xs text-ink-secondary"
@@ -117,7 +119,9 @@ export default function GuideDetailPage() {
         </span>
       </nav>
 
+      {/* 가이드 상세 + 챗봇 */}
       <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[minmax(0,1fr)_320px]">
+        {/* 가이드 상세 내용 */}
         <article className="min-w-0 rounded-card border border-line bg-surface p-5 shadow-soft sm:p-8">
           <GuideDetailHero guide={guide} />
 
@@ -136,9 +140,12 @@ export default function GuideDetailPage() {
           </div>
         </article>
 
+        {/* 오른쪽 사이드바 */}
         <div className="min-w-0 space-y-5 lg:sticky lg:top-24">
+          {/* MOA AI 챗봇 */}
           <GuideChatPanel guideTitle={guide.title} />
 
+          {/* 다른 금융정보 안내 */}
           <div className="rounded-card border border-line bg-primary-50 p-5">
             <div className="flex items-center gap-2">
               <BookOpen
