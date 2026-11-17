@@ -137,18 +137,41 @@ def find_exact_law(keyword):
     return current[0]
 
 
+def extract_article_text(item):
+    """조문 본문과 하위 항·호·목을 순서대로 결합한다."""
+    parts = []
+
+    def walk(node):
+        if isinstance(node, list):
+            for child in node:
+                walk(child)
+            return
+
+        if not isinstance(node, dict):
+            return
+
+        # 국가법령정보센터 JSON: 조문내용과 항/호/목이 별도 중첩됨
+        for key in ("조문내용", "항내용", "호내용", "목내용"):
+            if key in node:
+                value = clean_text(node[key])
+                if value and (not parts or parts[-1] != value):
+                    parts.append(value)
+
+        for key in ("항", "호", "목"):
+            if key in node:
+                walk(node[key])
+
+    walk(item)
+    return "\n".join(parts)
+
+
 def prepare_articles(detail):
     article_container = detail.get("조문") or {}
 
     if not isinstance(article_container, dict):
-        raise ValueError(
-            "조문 응답 형식이 올바르지 않습니다."
-        )
+        raise ValueError("조문 응답 형식이 올바르지 않습니다.")
 
-    raw_articles = as_list(
-        article_container.get("조문단위")
-    )
-
+    raw_articles = as_list(article_container.get("조문단위"))
     articles = []
     seen_keys = set()
 
@@ -156,56 +179,31 @@ def prepare_articles(detail):
         if not isinstance(item, dict):
             continue
 
-        # 장·절 제목은 제외하고 실제 조문만 저장
-        if clean_text(
-            item.get("조문여부")
-        ) != "조문":
+        # 장·절 제목 제외
+        if clean_text(item.get("조문여부")) != "조문":
             continue
 
-        article_key = clean_text(
-            item.get("조문키")
-        )
+        article_key = clean_text(item.get("조문키"))
+        article_no = clean_text(item.get("조문번호"))
+        article_text = extract_article_text(item)
 
-        article_no = clean_text(
-            item.get("조문번호")
-        )
-
-        article_text = clean_text(
-            item.get("조문내용")
-        )
-
-        if (
-            not article_key
-            or not article_no
-            or not article_text
-        ):
-            raise ValueError(
-                "조문에 필수 정보가 누락됐습니다."
-            )
+        if not article_key or not article_no or not article_text:
+            raise ValueError("조문에 필수 정보가 누락됐습니다.")
 
         if article_key in seen_keys:
-            raise ValueError(
-                f"중복 조문키 발견: {article_key}"
-            )
-
+            raise ValueError(f"중복 조문키 발견: {article_key}")
         seen_keys.add(article_key)
 
         articles.append({
             "article_key": article_key,
             "article_no": article_no,
             "paragraph_no": None,
-            "heading": (
-                clean_text(
-                    item.get("조문제목")
-                ) or None
-            ),
+            "heading": clean_text(item.get("조문제목")) or None,
             "official_text": article_text,
         })
 
     if not articles:
-        raise ValueError(
-            "저장 가능한 조문이 없습니다."
-        )
+        raise ValueError("저장 가능한 조문이 없습니다.")
 
     return articles
 
@@ -305,6 +303,16 @@ def sync_one_law(db, keyword):
         )
 
     articles = prepare_articles(detail)
+
+    # API 응답 구조가 예상과 다르면 제목만 다시 저장하지 않도록 보호
+    if keyword == "근로기준법":
+        for number in ("55", "56", "70"):
+            matches = [a for a in articles if a["article_no"] == number]
+            if not matches or max(len(a["official_text"]) for a in matches) < 50:
+                raise ValueError(
+                    f"제{number}조 본문이 충분히 추출되지 않았습니다. "
+                    "DB를 변경하지 않고 중단합니다. API 응답 구조를 확인하세요."
+                )
 
     law_type = (
         clean_text(

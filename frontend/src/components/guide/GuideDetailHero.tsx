@@ -1,4 +1,3 @@
-
 import { CalendarDays, Share2 } from 'lucide-react'
 
 import type { GuideDetail } from '../../types/guide'
@@ -36,7 +35,8 @@ export default function GuideDetailHero({
     }
   }
 
-  const updatedDate = guide.reviewed_at ?? guide.updated_at
+  const updatedDate =
+    guide.reviewed_at ?? guide.updated_at
 
   return (
     <header className="border-b border-line pb-6">
@@ -63,13 +63,15 @@ export default function GuideDetailHero({
         {guide.summary}
       </p>
 
-      <div className="mt-5 flex items-center gap-2 text-xs text-ink-muted">
-        <CalendarDays size={14} />
-        <span>
-          최종 확인일{' '}
-          {new Date(updatedDate).toLocaleDateString('ko-KR')}
-        </span>
-      </div>
+      {updatedDate && (
+        <div className="mt-5 flex items-center gap-2 text-xs text-ink-muted">
+          <CalendarDays size={14} />
+          <span>
+            자료 확인일{' '}
+            {new Date(updatedDate).toLocaleDateString('ko-KR')}
+          </span>
+        </div>
+      )}
     </header>
   )
 }

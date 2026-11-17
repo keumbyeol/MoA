@@ -1,4 +1,3 @@
-
 import { Bookmark } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -7,7 +6,7 @@ import type { Guide } from '../../types/guide'
 interface GuideCardProps {
   guide: Guide
   isBookmarked?: boolean
-  onBookmarkClick?: (guideId: number) => void
+  onBookmarkClick?: (guideId: string) => void
 }
 
 const categoryStyles: Record<

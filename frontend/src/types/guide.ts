@@ -1,11 +1,11 @@
-
 export interface GuideCategory {
   id: number
   slug: string
   name: string
 }
 
-export interface GuideCategoryWithCount extends GuideCategory {
+export interface GuideCategoryWithCount
+  extends GuideCategory {
   count: number
 }
 
@@ -14,8 +14,10 @@ export interface GuideCategoriesResponse {
   categories: GuideCategoryWithCount[]
 }
 
+export type GuideId = string
+
 export interface Guide {
-  id: number
+  id: GuideId
   slug: string
   title: string
   summary: string
@@ -23,7 +25,8 @@ export interface Guide {
   audience: string | null
   published_at: string | null
   reviewed_at: string | null
-  updated_at: string
+  updated_at: string | null
+  kind: 'topic' | 'policy'
 }
 
 export interface GuideReference {
@@ -31,16 +34,33 @@ export interface GuideReference {
   type: string
   title: string
   url: string
-  accessed_at: string
+  accessed_at: string | null
   effective_on: string | null
+}
+
+export interface GuideSection {
+  title: string
+  body: string
+}
+
+export interface GuideLawArticle {
+  id: number
+  article_no: string
+  heading: string | null
+  official_text: string
 }
 
 export interface GuideDetail extends Guide {
   body: string
+  sections?: GuideSection[]
+  law_articles?: GuideLawArticle[]
   references: GuideReference[]
 }
 
-export type GuideSort = 'latest' | 'oldest' | 'title'
+export type GuideSort =
+  | 'latest'
+  | 'oldest'
+  | 'title'
 
 export interface GuideListParams {
   page?: number

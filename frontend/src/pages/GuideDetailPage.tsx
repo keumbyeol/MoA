@@ -1,4 +1,3 @@
-
 import { Link, useParams } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -14,15 +13,11 @@ import GuideChatPanel from '../components/guide/GuideChatPanel'
 import { useGuideDetail } from '../hooks/useGuides'
 
 export default function GuideDetailPage() {
-  const { guideId } = useParams<{ guideId: string }>()
-
-  const id = Number(guideId)
+  const { guideId = '' } =
+    useParams<{ guideId: string }>()
 
   const isValidId =
-    guideId !== undefined &&
-    /^\d+$/.test(guideId) &&
-    Number.isSafeInteger(id) &&
-    id > 0
+    /^(topic-[a-z0-9-]+|policy-[0-9]+)$/.test(guideId)
 
   const {
     data: guide,
@@ -30,7 +25,7 @@ export default function GuideDetailPage() {
     isError,
     error,
     refetch,
-  } = useGuideDetail(isValidId ? id : 0)
+  } = useGuideDetail(guideId)
 
   if (!isValidId) {
     return (
@@ -65,27 +60,29 @@ export default function GuideDetailPage() {
   }
 
   if (isError || !guide) {
-    const status =
-      (
-        error as {
-          response?: { status?: number }
-        } | null
-      )?.response?.status
-
-    if (status === 404) {
-      return (
-        <GuideDetailMessage
-          title="가이드를 찾을 수 없습니다."
-          description="삭제되었거나 공개되지 않은 가이드입니다."
-        />
-      )
-    }
+    const status = (
+      error as {
+        response?: { status?: number }
+      } | null
+    )?.response?.status
 
     return (
       <GuideDetailMessage
-        title="가이드를 불러오지 못했습니다."
-        description="잠시 후 다시 시도해 주세요."
-        onRetry={() => void refetch()}
+        title={
+          status === 404
+            ? '가이드를 찾을 수 없습니다.'
+            : '가이드를 불러오지 못했습니다.'
+        }
+        description={
+          status === 404
+            ? '관련 정보가 존재하지 않습니다.'
+            : '잠시 후 다시 시도해 주세요.'
+        }
+        onRetry={
+          status === 404
+            ? undefined
+            : () => void refetch()
+        }
       />
     )
   }
@@ -103,11 +100,17 @@ export default function GuideDetailPage() {
           금융정보 가이드
         </Link>
 
-        <ChevronRight size={14} aria-hidden="true" />
+        <ChevronRight
+          size={14}
+          aria-hidden="true"
+        />
 
         <span>{guide.category.name}</span>
 
-        <ChevronRight size={14} aria-hidden="true" />
+        <ChevronRight
+          size={14}
+          aria-hidden="true"
+        />
 
         <span className="max-w-48 truncate font-semibold text-ink">
           {guide.title}
