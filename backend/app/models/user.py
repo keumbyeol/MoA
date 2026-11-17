@@ -19,6 +19,10 @@ def utc_now() -> datetime:
     return datetime.now(timezone.utc).replace(tzinfo=None)
 
 
+# =========================================================
+# 사용자
+# =========================================================
+
 class User(Base):
     __tablename__ = "users"
 
@@ -88,6 +92,34 @@ class User(Base):
         nullable=True,
     )
 
+    # =====================================================
+    # 회원가입 필수 약관 동의 기록
+    # =====================================================
+
+    terms_agreed_at: Mapped[datetime | None] = mapped_column(
+        DateTime,
+        nullable=True,
+    )
+
+    privacy_agreed_at: Mapped[datetime | None] = mapped_column(
+        DateTime,
+        nullable=True,
+    )
+
+    terms_version: Mapped[str | None] = mapped_column(
+        String(20),
+        nullable=True,
+    )
+
+    privacy_version: Mapped[str | None] = mapped_column(
+        String(20),
+        nullable=True,
+    )
+
+
+# =========================================================
+# 인증 리프레시 토큰
+# =========================================================
 
 class AuthRefreshToken(Base):
     __tablename__ = "auth_refresh_tokens"
@@ -135,7 +167,6 @@ class AuthRefreshToken(Base):
 
 # =========================================================
 # 월별 급여 계산 기록
-# 기존 User / AuthRefreshToken 모델은 변경하지 않음
 # =========================================================
 
 class WageRecord(Base):
@@ -202,50 +233,4 @@ class WageRecord(Base):
         DateTime,
         default=utc_now,
         nullable=False,
-    )
-        # ==========================================
-    # 필수 약관 동의 기록
-    # ==========================================
-
-    terms_agreed_at: Mapped[datetime | None] = mapped_column(
-        DateTime,
-        nullable=True,
-    )
-
-    privacy_agreed_at: Mapped[datetime | None] = mapped_column(
-        DateTime,
-        nullable=True,
-    )
-
-    terms_version: Mapped[str | None] = mapped_column(
-        String(20),
-        nullable=True,
-    )
-
-    privacy_version: Mapped[str | None] = mapped_column(
-        String(20),
-        nullable=True,
-    )
-    # ==========================================
-    # 필수 약관 동의 기록
-    # ==========================================
-
-    terms_agreed_at: Mapped[datetime | None] = mapped_column(
-        DateTime,
-        nullable=True,
-    )
-
-    privacy_agreed_at: Mapped[datetime | None] = mapped_column(
-        DateTime,
-        nullable=True,
-    )
-
-    terms_version: Mapped[str | None] = mapped_column(
-        String(20),
-        nullable=True,
-    )
-
-    privacy_version: Mapped[str | None] = mapped_column(
-        String(20),
-        nullable=True,
     )
