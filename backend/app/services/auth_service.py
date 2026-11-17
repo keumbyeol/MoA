@@ -12,19 +12,41 @@ from app.core.security import (
     hash_refresh_token,
     verify_password,
 )
+
 from app.models.user import User, AuthRefreshToken
+
 from app.repositories.user_repository import (
     find_refresh_token,
     find_user_by_email,
 )
-from app.schemas.auth import SignupRequest
+
+from app.schemas.auth import (
+    SignupRequest,
+    UpdateUserRequest,
+    ChangePasswordRequest,
+)
 
 
 def now_utc() -> datetime:
     return datetime.now(timezone.utc).replace(tzinfo=None)
 
 
+# ==========================================
 # 회원가입
+# ==========================================
+
+# ==========================================
+# 회원가입 약관 버전
+# ==========================================
+
+TERMS_VERSION = "1.0"
+PRIVACY_VERSION = "1.0"
+
+
+# ==========================================
+# 회원가입
+# ==========================================
+
 def signup(db: Session, data: SignupRequest) -> User:
     email = str(data.email).lower()
 
@@ -34,10 +56,20 @@ def signup(db: Session, data: SignupRequest) -> User:
             detail="이미 가입된 이메일입니다.",
         )
 
+    # 동의 여부는 SignupRequest에서 검증됨
+    agreed_at = now_utc()
+
     user = User(
         email=email,
-        nickname=data.nickname,
+        nickname=data.nickname.strip(),
         password_hash=hash_password(data.password),
+        user_type=data.user_type,
+
+        # 필수 약관 동의 기록
+        terms_agreed_at=agreed_at,
+        privacy_agreed_at=agreed_at,
+        terms_version=TERMS_VERSION,
+        privacy_version=PRIVACY_VERSION,
     )
 
     db.add(user)
@@ -48,6 +80,7 @@ def signup(db: Session, data: SignupRequest) -> User:
 
     except IntegrityError:
         db.rollback()
+
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="이미 가입된 이메일입니다.",
@@ -55,8 +88,10 @@ def signup(db: Session, data: SignupRequest) -> User:
 
     return user
 
-
+# ==========================================
 # Access Token + Refresh Token 발급
+# ==========================================
+
 def issue_tokens(db: Session, user: User) -> dict:
     refresh_token = create_refresh_token()
     now = now_utc()
@@ -78,7 +113,10 @@ def issue_tokens(db: Session, user: User) -> dict:
     }
 
 
+# ==========================================
 # 로그인
+# ==========================================
+
 def login(
     db: Session,
     email: str,
@@ -88,14 +126,20 @@ def login(
 
     if (
         user is None
-        or not verify_password(password, user.password_hash)
+        or not verify_password(
+            password,
+            user.password_hash,
+        )
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="이메일 또는 비밀번호가 올바르지 않습니다.",
         )
 
-    if user.status != "ACTIVE" or user.deleted_at is not None:
+    if (
+        user.status != "ACTIVE"
+        or user.deleted_at is not None
+    ):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="사용할 수 없는 계정입니다.",
@@ -107,7 +151,10 @@ def login(
     return issue_tokens(db, user)
 
 
+# ==========================================
 # Refresh Token 갱신
+# ==========================================
+
 def refresh_tokens(db: Session, token: str) -> dict:
     saved = find_refresh_token(
         db,
@@ -161,7 +208,10 @@ def refresh_tokens(db: Session, token: str) -> dict:
     }
 
 
+# ==========================================
 # 로그아웃
+# ==========================================
+
 def logout(
     db: Session,
     token: str,
@@ -181,3 +231,88 @@ def logout(
     if saved.revoked_at is None:
         saved.revoked_at = now_utc()
         db.commit()
+
+
+# ==========================================
+# 회원 정보 수정
+# 닉네임 / 회원 유형
+# ==========================================
+
+def update_user(
+    db: Session,
+    user: User,
+    data: UpdateUserRequest,
+) -> User:
+    if (
+        data.nickname is None
+        and data.user_type is None
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="수정할 정보를 입력해 주세요.",
+        )
+
+    if data.nickname is not None:
+        nickname = data.nickname.strip()
+
+        if len(nickname) < 2:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="닉네임은 2자 이상 입력해 주세요.",
+            )
+
+        user.nickname = nickname
+
+    if data.user_type is not None:
+        user.user_type = data.user_type
+
+    try:
+        db.commit()
+        db.refresh(user)
+
+    except Exception:
+        db.rollback()
+        raise
+
+    return user
+
+
+# ==========================================
+# 비밀번호 변경
+# ==========================================
+
+def change_password(
+    db: Session,
+    user: User,
+    data: ChangePasswordRequest,
+) -> None:
+    # 현재 비밀번호 확인
+    if not verify_password(
+        data.current_password,
+        user.password_hash,
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="현재 비밀번호가 올바르지 않습니다.",
+        )
+
+    # 기존 비밀번호와 동일한지 확인
+    if verify_password(
+        data.new_password,
+        user.password_hash,
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="기존 비밀번호와 다른 비밀번호를 입력해 주세요.",
+        )
+
+    user.password_hash = hash_password(
+        data.new_password,
+    )
+
+    try:
+        db.commit()
+
+    except Exception:
+        db.rollback()
+        raise

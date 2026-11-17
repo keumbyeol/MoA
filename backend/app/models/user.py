@@ -203,3 +203,49 @@ class WageRecord(Base):
         default=utc_now,
         nullable=False,
     )
+        # ==========================================
+    # 필수 약관 동의 기록
+    # ==========================================
+
+    terms_agreed_at: Mapped[datetime | None] = mapped_column(
+        DateTime,
+        nullable=True,
+    )
+
+    privacy_agreed_at: Mapped[datetime | None] = mapped_column(
+        DateTime,
+        nullable=True,
+    )
+
+    terms_version: Mapped[str | None] = mapped_column(
+        String(20),
+        nullable=True,
+    )
+
+    privacy_version: Mapped[str | None] = mapped_column(
+        String(20),
+        nullable=True,
+    )
+    # ==========================================
+    # 필수 약관 동의 기록
+    # ==========================================
+
+    terms_agreed_at: Mapped[datetime | None] = mapped_column(
+        DateTime,
+        nullable=True,
+    )
+
+    privacy_agreed_at: Mapped[datetime | None] = mapped_column(
+        DateTime,
+        nullable=True,
+    )
+
+    terms_version: Mapped[str | None] = mapped_column(
+        String(20),
+        nullable=True,
+    )
+
+    privacy_version: Mapped[str | None] = mapped_column(
+        String(20),
+        nullable=True,
+    )
