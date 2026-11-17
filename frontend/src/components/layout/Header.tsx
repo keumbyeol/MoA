@@ -1,14 +1,12 @@
 
-import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import {
-  Bell,
   Calculator,
   Home,
   LogIn,
   LogOut,
   Menu,
-  Search,
   UserRound,
   X,
 } from 'lucide-react'
@@ -27,7 +25,6 @@ export default function Header() {
   const navigate = useNavigate()
   const { user, isAuthenticated, logout } = useAuth()
 
-  const [search, setSearch] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [loggingOut, setLoggingOut] = useState(false)
@@ -50,17 +47,6 @@ export default function Header() {
       document.removeEventListener('mousedown', handleOutsideClick)
     }
   }, [])
-
-  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    const keyword = search.trim()
-
-    if (!keyword) return
-
-    navigate(`/guides?search=${encodeURIComponent(keyword)}`)
-    setMobileMenuOpen(false)
-  }
 
   const handleLogout = async () => {
     if (loggingOut) return
@@ -124,40 +110,8 @@ export default function Header() {
           })}
         </nav>
 
+        {/* 사용자 메뉴 및 모바일 메뉴 */}
         <div className="ml-auto flex items-center gap-5">
-          {/* 검색 */}
-          <form
-            onSubmit={handleSearch}
-            role="search"
-            className="hidden h-[46px] w-[250px] items-center gap-3 rounded-full bg-surface-muted px-4 xl:flex 2xl:w-[320px]"
-          >
-            <Search
-              size={22}
-              className="shrink-0 text-ink-muted"
-            />
-
-            <input
-              type="search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="궁금한 금융 정보를 검색해보세요"
-              aria-label="금융 정보 검색"
-              className="min-w-0 flex-1 bg-transparent text-[14px] text-ink outline-none placeholder:text-ink-muted"
-            />
-          </form>
-
-          {/* 알림 기능은 API 구현 전까지 비활성화 */}
-          <button
-            type="button"
-            disabled
-            title="알림 기능 준비 중"
-            aria-label="알림 기능 준비 중"
-            className="hidden text-ink-muted sm:flex"
-          >
-            <Bell size={26} strokeWidth={1.9} />
-          </button>
-
-          {/* 로그인 상태와 연결된 사용자 메뉴 */}
           <div ref={userMenuRef} className="relative">
             <button
               type="button"
@@ -238,6 +192,7 @@ export default function Header() {
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label={mobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
+            aria-expanded={mobileMenuOpen}
             className="flex items-center justify-center text-ink lg:hidden"
           >
             {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
@@ -268,22 +223,6 @@ export default function Header() {
               </NavLink>
             ))}
           </nav>
-
-          {/* 모바일 검색 */}
-          <form onSubmit={handleSearch} className="relative mt-4">
-            <Search
-              size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted"
-            />
-
-            <input
-              type="search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="금융 정보 검색"
-              className="h-11 w-full rounded-full bg-surface-muted pl-11 pr-4 text-[14px] outline-none"
-            />
-          </form>
         </div>
       )}
     </header>
