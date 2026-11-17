@@ -1,3 +1,4 @@
+
 import { apiClient } from './client'
 
 import {
@@ -63,7 +64,9 @@ export function buildWagePayload(
   if (data.work_mode === 'FLEXIBLE') {
     const shifts = data.shifts
       .map(normalizeShift)
-      .sort((a, b) => a.work_date.localeCompare(b.work_date))
+      .sort((a, b) =>
+        a.work_date.localeCompare(b.work_date)
+      )
 
     return {
       ...common,
@@ -98,8 +101,11 @@ export function buildWagePayload(
     weekly_holiday_work_hours: Number(
       data.weekly_holiday_work_hours
     ),
-    target_year: null,
-    target_month: null,
+
+    // 고정 근무에서도 선택한 연월 유지
+    target_year: data.target_year ?? null,
+    target_month: data.target_month ?? null,
+
     reference_date: null,
     shifts: [],
   }

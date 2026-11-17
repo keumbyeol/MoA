@@ -481,6 +481,8 @@ def calculate_fixed(
             * MONTHLY_WEEKS
         ),
         total_work_days=0,
+        target_year=data.target_year,
+        target_month=data.target_month,
         notes=notes,
         disclaimer=DISCLAIMER,
     )
@@ -837,12 +839,8 @@ def save_wage_record(
     result = calculate_wage(data)
     today = date.today()
 
-    if data.work_mode == "FLEXIBLE":
-        year = data.target_year
-        month = data.target_month
-    else:
-        year = today.year
-        month = today.month
+    year = data.target_year if data.target_year is not None else today.year
+    month = data.target_month if data.target_month is not None else today.month
 
     record = WageRecord(
         user_id=user_id,

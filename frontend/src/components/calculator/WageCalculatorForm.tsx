@@ -375,6 +375,42 @@ export default function WageCalculatorForm({
             </div>
           </div>
 
+
+{/* 고정 근무 - 계산 대상 연월 */}
+{form.work_mode === 'FIXED' && (
+  <div className="grid gap-3 sm:grid-cols-[115px_minmax(0,1fr)] sm:items-center">
+    <label
+      htmlFor="fixed-target-month"
+      className="text-[15px] text-ink"
+    >
+      계산 대상 월
+    </label>
+
+    <input
+      id="fixed-target-month"
+      type="month"
+      value={`${form.target_year ?? new Date().getFullYear()}-${String(
+        form.target_month ?? new Date().getMonth() + 1
+      ).padStart(2, '0')}`}
+      onChange={(event) => {
+        if (!event.target.value) return
+
+        const [year, month] = event.target.value
+          .split('-')
+          .map(Number)
+
+        update({
+          target_year: year,
+          target_month: month,
+          reference_date: null,
+        })
+      }}
+      className="h-11 w-full rounded-xl border border-[#E3E7DD] bg-white px-4 text-[14px] text-ink outline-none transition focus:border-[#83B64B]"
+    />
+  </div>
+)}
+
+
           {/* 시급 */}
           <WageInputField
             label="시급"
