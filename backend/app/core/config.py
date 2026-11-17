@@ -15,6 +15,10 @@ class Settings(BaseSettings):
     # 공공데이터포털 / 온통청년 정책 API
     DATA_GO_KR_API_KEY: str = ""
 
+    # OpenAI API - AI 챗봇
+    OPENAI_API_KEY: str = ""
+    OPENAI_MODEL: str = "gpt-4.1-mini"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
