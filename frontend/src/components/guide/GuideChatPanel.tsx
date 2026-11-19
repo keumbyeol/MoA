@@ -34,6 +34,8 @@ export default function GuideChatPanel({
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
   const [error, setError] = useState('')
+  const conversationIdRef = useRef<number | null>(null)
+  const guideVersionRef = useRef(0)
 
   const nextId = useRef(1)
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -65,6 +67,8 @@ export default function GuideChatPanel({
 
   // 가이드가 바뀌면 대화 초기화
   useEffect(() => {
+    guideVersionRef.current += 1
+    conversationIdRef.current = null
     setMessages([])
     setInput('')
     setError('')
@@ -87,6 +91,7 @@ export default function GuideChatPanel({
     if (!text || sendingRef.current) return
 
     sendingRef.current = true
+    const requestGuideVersion = guideVersionRef.current
 
     const history: ChatHistoryItem[] = messages
       .map(({ role, content }) => ({
@@ -113,7 +118,12 @@ export default function GuideChatPanel({
           `현재 보고 있는 금융정보 가이드는 "${guideTitle}"입니다.\n` +
           `사용자 질문: ${text}`,
         history,
+        conversation_id: conversationIdRef.current,
       })
+
+      if (requestGuideVersion !== guideVersionRef.current) return
+
+      conversationIdRef.current = result.conversation_id ?? null
 
       setMessages((prev) => [
         ...prev,
@@ -125,6 +135,7 @@ export default function GuideChatPanel({
         },
       ])
     } catch (err) {
+      if (requestGuideVersion !== guideVersionRef.current) return
       setError(
         getApiErrorMessage(
           err,

@@ -4,13 +4,18 @@
 import json
 
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import HTTPAuthorizationCredentials
 from pydantic import BaseModel, Field
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.orm import Session, selectinload
 from openai import AsyncOpenAI, OpenAIError
 
 from app.core.config import settings
 from app.core.database import get_db
+from app.core.dependencies import bearer_scheme, get_current_user
+from app.core.security import decode_access_token
+from app.models.user import User
+from app.models.chat_history import AIConversation, AIMessage, utc_now
 from app.models.quiz import QuizQuestion
 from app.services.chat_retrieval import retrieve_context
 
@@ -176,6 +181,7 @@ class ChatRequest(BaseModel):
         default_factory=list,
         max_length=12,
     )
+    conversation_id: int | None = Field(default=None, gt=0)
 
 
 class ChatSource(BaseModel):
@@ -190,6 +196,7 @@ class ChatResponse(BaseModel):
     sources: list[ChatSource] = Field(
         default_factory=list,
     )
+    conversation_id: int | None = None
 
 
 # ==========================================
@@ -201,9 +208,32 @@ class ChatResponse(BaseModel):
 async def chat(
     request: ChatRequest,
     db: Session = Depends(get_db),
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
 ):
     check_api_key()
     validate_history(request.history)
+
+    # 비회원은 기존과 같이 일회성 질문 가능. 로그인한 회원만 기록 저장.
+    user = None
+    if credentials is not None:
+        user_id = decode_access_token(credentials.credentials)
+        if user_id is None:
+            raise HTTPException(status_code=401, detail="유효하지 않은 인증 토큰입니다.")
+        user = db.get(User, user_id)
+        if user is None or user.status != "ACTIVE" or user.deleted_at is not None:
+            raise HTTPException(status_code=401, detail="사용할 수 없는 계정입니다.")
+    if request.conversation_id is not None and user is None:
+        raise HTTPException(status_code=401, detail="대화 기록을 사용하려면 로그인이 필요합니다.")
+
+    conversation = None
+    if request.conversation_id is not None:
+        conversation = db.scalar(select(AIConversation).where(
+            AIConversation.id == request.conversation_id,
+            AIConversation.user_id == user.id,
+            AIConversation.deleted_at.is_(None),
+        ))
+        if conversation is None:
+            raise HTTPException(status_code=404, detail="대화 기록을 찾을 수 없습니다.")
 
     recent_user = [
         item.content
@@ -245,7 +275,14 @@ async def chat(
         },
     ]
 
-    messages += format_history(request.history)
+    # 세션을 지정한 경우 DB 기록을 사용해 이전 대화 복원.
+    if conversation is not None:
+        previous = db.scalars(select(AIMessage).where(
+            AIMessage.conversation_id == conversation.id
+        ).order_by(AIMessage.id.desc()).limit(12)).all()
+        messages += [{"role": m.role, "content": m.content} for m in reversed(previous)]
+    else:
+        messages += format_history(request.history)
 
     messages.append({
         "role": "user",
@@ -254,10 +291,18 @@ async def chat(
 
     answer = await request_ai(messages)
 
-    return ChatResponse(
-        answer=answer,
-        sources=sources,
-    )
+    if user is not None:
+        if conversation is None:
+            conversation = AIConversation(user_id=user.id, title=request.message.strip()[:200])
+            db.add(conversation)
+            db.flush()
+        db.add(AIMessage(conversation_id=conversation.id, role="user", content=request.message))
+        db.add(AIMessage(conversation_id=conversation.id, role="assistant", content=answer, model_name=settings.OPENAI_MODEL))
+        conversation.updated_at = utc_now()
+        db.commit()
+        db.refresh(conversation)
+
+    return ChatResponse(answer=answer, sources=sources, conversation_id=conversation.id if conversation else None)
 
 
 # ==========================================
@@ -363,6 +408,62 @@ async def generate_chat_suggestions(
             status_code=502,
             detail="추천 질문을 생성하지 못했습니다.",
         )
+
+
+# ==========================================
+# 4-1. 회원 대화 기록
+# ==========================================
+
+def conversation_dict(item: AIConversation):
+    return {"id": item.id, "title": item.title, "created_at": item.created_at, "updated_at": item.updated_at}
+
+
+@router.get("/conversations")
+def list_conversations(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    items = db.scalars(select(AIConversation).where(
+        AIConversation.user_id == user.id, AIConversation.deleted_at.is_(None)
+    ).order_by(AIConversation.updated_at.desc(), AIConversation.id.desc())).all()
+    return {"total": len(items), "items": [conversation_dict(item) for item in items]}
+
+
+@router.get("/conversations/count")
+def count_conversations(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    count = db.scalar(select(func.count(AIConversation.id)).where(
+        AIConversation.user_id == user.id, AIConversation.deleted_at.is_(None)
+    )) or 0
+    return {"count": count}
+
+
+@router.get("/conversations/{conversation_id}")
+def get_conversation(conversation_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    item = db.scalar(select(AIConversation).where(
+        AIConversation.id == conversation_id,
+        AIConversation.user_id == user.id,
+        AIConversation.deleted_at.is_(None),
+    ))
+    if item is None:
+        raise HTTPException(status_code=404, detail="대화 기록을 찾을 수 없습니다.")
+    messages = db.scalars(select(AIMessage).where(
+        AIMessage.conversation_id == item.id
+    ).order_by(AIMessage.id.asc())).all()
+    return {**conversation_dict(item), "messages": [
+        {"id": m.id, "role": m.role, "content": m.content, "created_at": m.created_at}
+        for m in messages
+    ]}
+
+
+@router.delete("/conversations/{conversation_id}")
+def delete_conversation(conversation_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    item = db.scalar(select(AIConversation).where(
+        AIConversation.id == conversation_id,
+        AIConversation.user_id == user.id,
+        AIConversation.deleted_at.is_(None),
+    ))
+    if item is None:
+        raise HTTPException(status_code=404, detail="대화 기록을 찾을 수 없습니다.")
+    item.deleted_at = utc_now()
+    db.commit()
+    return {"message": "대화 기록이 삭제되었습니다."}
 
 
 # ==========================================

@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BookOpen, ChevronDown, SearchX } from 'lucide-react'
 
 import GuideHero from '../components/guide/GuideHero'
@@ -13,15 +13,30 @@ import {
   useGuides,
 } from '../hooks/useGuides'
 
+import { guideApi } from '../api/guide'
+import { useAuth } from '../hooks/useAuth'
+import { message } from '../components/common/Message'
+
 import type { GuideSort } from '../types/guide'
 
 const PAGE_SIZE = 9
 
 export default function GuidePage() {
+  const { isAuthenticated } = useAuth()
+
   const [page, setPage] = useState(1)
   const [category, setCategory] = useState('all')
   const [keyword, setKeyword] = useState('')
   const [sort, setSort] = useState<GuideSort>('latest')
+
+  // 북마크된 가이드 ID
+  const [bookmarkedIds, setBookmarkedIds] = useState<
+    Set<string>
+  >(new Set())
+
+  // 중복 클릭 방지
+  const [bookmarkLoadingIds, setBookmarkLoadingIds] =
+    useState<Set<string>>(new Set())
 
   const {
     data: categoryData,
@@ -41,6 +56,110 @@ export default function GuidePage() {
     keyword: keyword || undefined,
     sort,
   })
+
+  // ==========================================
+  // 로그인 시 북마크 목록 불러오기
+  // ==========================================
+
+  useEffect(() => {
+    let cancelled = false
+
+    if (!isAuthenticated) {
+      setBookmarkedIds(new Set())
+      return
+    }
+
+    const loadBookmarks = async () => {
+      try {
+        const response = await guideApi.getBookmarkIds()
+
+        if (!cancelled) {
+          setBookmarkedIds(
+            new Set(response.guide_ids),
+          )
+        }
+      } catch (error) {
+        console.error('북마크 조회 오류:', error)
+
+        if (!cancelled) {
+          setBookmarkedIds(new Set())
+        }
+      }
+    }
+
+    void loadBookmarks()
+
+    return () => {
+      cancelled = true
+    }
+  }, [isAuthenticated])
+
+  // ==========================================
+  // 북마크 추가 및 해제
+  // ==========================================
+
+  const handleBookmarkClick = async (guideId: string) => {
+    if (!isAuthenticated) {
+      message.warning(
+        '북마크 기능은 로그인 후 이용할 수 있습니다.',
+      )
+      return
+    }
+
+    if (bookmarkLoadingIds.has(guideId)) {
+      return
+    }
+
+    setBookmarkLoadingIds((prev) => {
+      const next = new Set(prev)
+      next.add(guideId)
+      return next
+    })
+
+    const wasBookmarked = bookmarkedIds.has(guideId)
+
+    try {
+      const nextBookmarked =
+        await guideApi.toggleBookmark(
+          guideId,
+          wasBookmarked,
+        )
+
+      setBookmarkedIds((prev) => {
+        const next = new Set(prev)
+
+        if (nextBookmarked) {
+          next.add(guideId)
+        } else {
+          next.delete(guideId)
+        }
+
+        return next
+      })
+
+      message.success(
+        nextBookmarked
+          ? '북마크에 추가되었습니다.'
+          : '북마크가 해제되었습니다.',
+      )
+    } catch (error) {
+      console.error('북마크 변경 오류:', error)
+
+      message.error(
+        '북마크 처리에 실패했습니다. 다시 시도해주세요.',
+      )
+    } finally {
+      setBookmarkLoadingIds((prev) => {
+        const next = new Set(prev)
+        next.delete(guideId)
+        return next
+      })
+    }
+  }
+
+  // ==========================================
+  // 검색 / 카테고리 / 정렬
+  // ==========================================
 
   const handleCategoryChange = (slug: string) => {
     setCategory(slug)
@@ -71,6 +190,7 @@ export default function GuidePage() {
               size={20}
               className="text-primary-dark"
             />
+
             <h2 className="text-lg font-bold text-ink">
               어떤 정보가 궁금하신가요?
             </h2>
@@ -148,6 +268,7 @@ export default function GuidePage() {
                   className="h-56 animate-pulse rounded-card bg-surface-muted"
                 />
               ))}
+
               <span className="sr-only">
                 가이드를 불러오는 중입니다.
               </span>
@@ -212,6 +333,8 @@ export default function GuidePage() {
                   <GuideCard
                     key={guide.id}
                     guide={guide}
+                    isBookmarked={bookmarkedIds.has(guide.id)}
+                    onBookmarkClick={handleBookmarkClick}
                   />
                 ))}
               </div>
@@ -221,6 +344,7 @@ export default function GuidePage() {
                 totalPages={guideData.pagination.total_pages}
                 onPageChange={(nextPage) => {
                   setPage(nextPage)
+
                   window.scrollTo({
                     top: 0,
                     behavior: 'smooth',

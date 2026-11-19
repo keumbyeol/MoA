@@ -1,3 +1,4 @@
+
 import { Bookmark } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -39,6 +40,49 @@ const categoryStyles: Record<
   },
 }
 
+// 기타 카테고리의 세부 분류와 제목을 분리
+function getGuideDisplayInfo(guide: Guide) {
+  const categoryName = guide.category.name
+  const title = guide.title.trim()
+
+  if (guide.category.slug !== 'other') {
+    return {
+      badgeText: categoryName,
+      titleText: title,
+    }
+  }
+
+  // 예: "기타 · 첫 알바 | 근로계약서 작성하기"
+  const separatorIndex = title.indexOf('|')
+
+  if (separatorIndex === -1) {
+    return {
+      badgeText: categoryName,
+      titleText: title,
+    }
+  }
+
+  const prefix = title.slice(0, separatorIndex).trim()
+  const actualTitle = title.slice(separatorIndex + 1).trim()
+
+  // "기타 · 첫 알바" 형태인지 확인
+  const match = prefix.match(/^기타\s*[·ㆍ]\s*(.+)$/)
+
+  if (!match || !actualTitle) {
+    return {
+      badgeText: categoryName,
+      titleText: title,
+    }
+  }
+
+  const subcategory = match[1].trim()
+
+  return {
+    badgeText: `${categoryName} · ${subcategory}`,
+    titleText: actualTitle,
+  }
+}
+
 export default function GuideCard({
   guide,
   isBookmarked = false,
@@ -49,13 +93,16 @@ export default function GuideCard({
     image: '/images/mascot/moa_cha_book1.png',
   }
 
+  const { badgeText, titleText } = getGuideDisplayInfo(guide)
+
   return (
     <article className="group relative flex min-h-52 flex-col overflow-hidden rounded-card border border-line bg-surface p-5 shadow-soft transition-all hover:-translate-y-1 hover:border-primary-300 hover:shadow-card-hover">
+      {/* 카테고리 배지 및 북마크 */}
       <div className="mb-4 flex items-center justify-between gap-2">
         <span
           className={`rounded-full px-3 py-1 text-2xs font-semibold ${style.badge}`}
         >
-          {guide.category.name}
+          {badgeText}
         </span>
 
         <button
@@ -79,18 +126,20 @@ export default function GuideCard({
         </button>
       </div>
 
+      {/* 가이드 제목 및 요약 */}
       <Link
         to={`/guides/${guide.id}`}
         className="relative flex flex-1 flex-col"
       >
         <h3 className="max-w-[90%] text-base font-bold leading-6 text-ink group-hover:text-primary-800">
-          {guide.title}
+          {titleText}
         </h3>
 
         <p className="mt-2 line-clamp-3 max-w-[88%] text-xs leading-5 text-ink-secondary">
           {guide.summary}
         </p>
 
+        {/* 카테고리별 마스코트 */}
         <img
           src={style.image}
           alt=""

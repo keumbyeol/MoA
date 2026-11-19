@@ -62,7 +62,7 @@ export default function QuizPage() {
     : null
 
   return (
-    <div className="min-h-[calc(100vh-90px)] bg-white text-ink">
+    <div className="min-h-[calc(100vh-90px)] bg-page text-ink">
       <div
         className={`mx-auto grid w-full ${
           isExplanation
@@ -383,7 +383,7 @@ export default function QuizPage() {
 
                 {/* 오른쪽: AI 챗봇 상시 표시 */}
                 <aside className="min-w-0 lg:sticky lg:top-[106px]">
-                  <div className="h-[580px] overflow-hidden rounded-2xl border border-primary-200 bg-white shadow-sm lg:h-[calc(100vh-130px)] lg:min-h-[520px]">
+                  <div className="h-[580px] overflow-hidden rounded-2xl border border-primary-200 bg-white lg:h-[calc(100vh-130px)] lg:min-h-[520px]">
                     <QuizChatbot
                       key={`${result?.attempt_id ?? 'guest'}-${currentQuestion.id}`}
                       questionId={currentQuestion.id}
@@ -397,9 +397,9 @@ export default function QuizPage() {
           {starting && (
             <div
               role="status"
-              className="fixed inset-0 z-50 flex items-center justify-center bg-white/60"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-page/70"
             >
-              <div className="flex flex-col items-center gap-4 rounded-2xl bg-white p-8 shadow-lg">
+              <div className="flex flex-col items-center gap-4 rounded-2xl bg-white p-8 border border-line">
                 <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary-100 border-t-primary-500" />
 
                 <p className="text-sm font-semibold">

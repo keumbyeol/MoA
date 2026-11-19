@@ -23,6 +23,17 @@ router = APIRouter(
 # ==========================================
 
 TOPICS = [
+    ('year-end-tax', '연말정산, 처음이라면?', '세금', 'tax', '소득세법', ('연말정산', '근로소득')),
+    ('tax-refund', '세금 환급, 나도 받을 수 있을까요?', '세금', 'tax', '소득세법', ('환급', '원천징수')),
+    ('freelance-33', '3.3% 떼는 아르바이트, 환급받을 수 있나요?', '세금', 'tax', '소득세법', ('사업소득', '원천징수')),
+    ('first-parttime-contract', '기타 · 첫 알바 | 근로계약서 작성하기', '기타', 'other', None, ()),
+    ('first-parttime-payslip', '기타 · 첫 알바 | 첫 월급, 급여명세서 확인하기', '기타', 'other', None, ()),
+    ('reemployment-support', '기타 · 재취업 | 다시 일하기 전 지원제도 확인', '기타', 'other', None, ()),
+    ('reemployment-return', '기타 · 재취업 | 경력단절 후 다시 일할 때', '기타', 'other', None, ()),
+    ('first-job-checklist', '기타 · 첫 직장 | 입사 전 서류와 근로조건', '기타', 'other', None, ()),
+    ('first-job-insurance', '기타 · 첫 직장 | 4대보험 가입 확인하기', '기타', 'other', None, ()),
+    ('foreign-worker-contract', '기타 · 외국인 근로자 | 근로계약과 임금', '기타', 'other', None, ()),
+    ('foreign-worker-insurance', '기타 · 외국인 근로자 | 사회보험 가입 안내', '기타', 'other', None, ()),
     (
         "minimum-wage",
         "최저임금, 어떻게 확인할까요?",
@@ -349,6 +360,110 @@ TOPIC_CONTENT = {'minimum-wage': {'summary': '최저임금은 아르바이트를
                                                 '미루지 않는 것이 좋습니다.'}]}}
 
 
+# 신규 가이드 상세 콘텐츠
+TOPIC_CONTENT.update({
+    'year-end-tax': {
+        "summary": '연말정산은 매달 원천징수한 근로소득세와 실제 연간 세금을 비교해 정산하는 절차입니다. 환급뿐 아니라 추가 납부가 생길 수도 있습니다.',
+        "sections": [
+            {"title": '누가 연말정산을 하나요?', "body": '일반적인 근로소득자는 회사에서 연말정산을 진행합니다. 일용근로소득이나 사업소득 등은 처리 방식이 다를 수 있으므로 급여명세서와 소득 유형을 먼저 확인하세요.'},
+            {"title": '언제, 무엇을 준비하나요?', "body": '보통 다음 해 초 회사가 안내하는 일정에 맞춰 국세청 홈택스의 연말정산 간소화 자료를 확인하고, 누락된 공제 증빙을 제출합니다. 중도 입사자나 이직자는 이전 직장의 근로소득 원천징수영수증이 필요할 수 있습니다.'},
+            {"title": '환급액이 생기는 이유', "body": '한 해 동안 미리 낸 세금이 최종 결정세액보다 많으면 차액을 돌려받습니다. 반대로 적게 냈다면 추가 납부할 수 있습니다.'},
+            {"title": '확인할 항목', "body": '의료비·교육비·기부금·연금계좌·월세 등은 각기 다른 요건과 한도가 있습니다. 모든 지출이 자동으로 공제되는 것은 아닙니다.'},
+        ],
+    },
+    'tax-refund': {
+        "summary": '세금 환급은 이미 납부한 세금이 최종적으로 내야 할 세금보다 많을 때 차액을 돌려받는 것입니다.',
+        "sections": [
+            {"title": '어떤 경우에 환급받나요?', "body": '근로소득 연말정산이나 종합소득세 신고에서 기납부세액이 결정세액보다 많으면 환급이 발생할 수 있습니다. 환급 여부와 금액은 소득·공제·납부내역에 따라 달라집니다.'},
+            {"title": '어디서 확인하나요?', "body": '국세청 홈택스 또는 손택스에서 지급명세서, 신고 내역, 환급금 조회 메뉴를 확인하세요. 본인의 신고 대상 연도와 소득 종류를 먼저 확인하는 것이 중요합니다.'},
+            {"title": '신고 기간은 언제인가요?', "body": '종합소득세는 일반적으로 소득이 발생한 다음 해 5월에 신고합니다. 개인별 신고 의무 및 기한의 예외가 있으므로 국세청 안내를 확인하세요.'},
+            {"title": '주의할 점', "body": '환급을 보장한다는 광고를 그대로 믿지 마세요. 공제 대상이 아닌 비용을 신고하면 추후 가산세 등이 발생할 수 있습니다.'},
+        ],
+    },
+    'freelance-33': {
+        "summary": '급여에서 3.3%를 원천징수했다고 해서 반드시 환급받는 것은 아닙니다. 실제 소득 유형과 연간 소득·필요경비를 확인해야 합니다.',
+        "sections": [
+            {"title": '3.3%는 무엇인가요?', "body": '일반적으로 인적용역 사업소득을 지급할 때 소득세 3%와 지방소득세 0.3%를 원천징수하는 경우를 말합니다. 모든 아르바이트가 사업소득에 해당하는 것은 아닙니다.'},
+            {"title": '환급 여부는 어떻게 결정되나요?', "body": '종합소득세 신고 시 계산된 최종 세액과 이미 원천징수한 세액을 비교합니다. 미리 낸 세금이 더 많으면 환급될 수 있고, 부족하면 추가 납부할 수 있습니다.'},
+            {"title": '근로소득인지 먼저 확인하세요', "body": '근무시간·장소에 대한 지휘감독을 받는 등 실제 근로자에 해당한다면 계약서에 프리랜서라고 적혀 있어도 근로관계 판단이 달라질 수 있습니다.'},
+            {"title": '어떻게 확인하나요?', "body": '홈택스에서 지급명세서의 소득 종류를 확인하고, 종합소득세 신고 대상인지 검토하세요. 판단이 어렵다면 국세청 126에 문의할 수 있습니다.'},
+        ],
+    },
+    'first-parttime-contract': {
+        "summary": '첫 아르바이트를 시작할 때는 시급뿐 아니라 근무일, 근무시간, 휴게시간, 임금 지급일을 서면으로 확인하세요.',
+        "sections": [
+            {"title": '근로계약서에 무엇을 적나요?', "body": '임금, 소정근로시간, 휴일, 연차 유급휴가 등 법정 명시사항을 확인합니다. 특히 기간제·단시간 근로자는 근로일과 근로일별 근로시간 등 별도 서면 명시사항도 확인하세요.'},
+            {"title": '계약서는 언제 받나요?', "body": '근로조건을 정할 때 서면 또는 적법한 전자문서로 명시하고 근로자에게 교부해야 합니다. 서명한 계약서의 사본을 보관하세요.'},
+            {"title": '꼭 확인할 항목', "body": '① 시급과 수당 기준 ② 출퇴근·휴게시간 ③ 주 근무일 ④ 급여일과 지급 방법 ⑤ 계약기간 ⑥ 사업주와 근로자 정보'},
+            {"title": '계약서가 없다면?', "body": '계약서 미교부는 법적 문제가 될 수 있습니다. 문자, 채용공고, 근무표, 급여 이체 내역 등을 보관하고 고용노동부 1350에 상담하세요.'},
+        ],
+    },
+    'first-parttime-payslip': {
+        "summary": '첫 월급을 받았다면 통장 입금액뿐 아니라 급여명세서의 근무시간·수당·공제 내역을 확인하세요.',
+        "sections": [
+            {"title": '급여명세서에서 볼 항목', "body": '기본급, 주휴수당, 연장·야간·휴일근로수당, 식대 등의 지급 항목과 소득세·보험료 등 공제 항목을 구분해 확인합니다.'},
+            {"title": '급여명세서를 받아야 하나요?', "body": '사용자는 임금을 지급할 때 법정 기재사항이 포함된 임금명세서를 교부해야 합니다. 전자문서로 제공하는 것도 가능합니다.'},
+            {"title": '금액이 다르면?', "body": '근무일과 출퇴근시간, 휴게시간, 시급을 다시 대조하고 사업주에게 계산 근거를 문의하세요. 임금명세서와 계좌 입금내역을 보관하는 것이 좋습니다.'},
+            {"title": '세전과 세후의 차이', "body": '세전 급여는 공제 전 금액, 실수령액은 세금과 사회보험료 등을 공제한 후 실제 입금되는 금액입니다.'},
+        ],
+    },
+    'reemployment-support': {
+        "summary": '재취업을 준비한다면 고용24에서 구직지원, 직업훈련, 취업상담 등 이용 가능한 제도를 확인해 보세요.',
+        "sections": [
+            {"title": '어디서 시작하나요?', "body": '고용24에서 구직등록과 취업지원 서비스를 확인하고, 가까운 고용센터의 상담을 이용할 수 있습니다.'},
+            {"title": '직업훈련 지원', "body": '국민내일배움카드 등 직업훈련 지원은 연령·고용상태·훈련과정에 따라 신청 요건과 지원 수준이 다릅니다.'},
+            {"title": '취업지원 제도', "body": '국민취업지원제도 등은 소득·재산·취업경험 등 요건을 충족해야 합니다. 다른 급여와 중복 제한이 있을 수 있습니다.'},
+            {"title": '준비하면 좋은 자료', "body": '이력서, 경력증명서, 자격증, 고용보험 가입이력과 이전 직장 퇴사 관련 자료를 정리해 두세요.'},
+        ],
+    },
+    'reemployment-return': {
+        "summary": '경력단절 후 다시 일할 때는 이전 경력을 정리하고 근로조건·훈련·돌봄 지원 여부를 함께 확인하는 것이 좋습니다.',
+        "sections": [
+            {"title": '경력부터 정리하기', "body": '이전 직무, 프로젝트, 자격증, 공백 기간에 익힌 기술을 정리해 이력서에 반영하세요.'},
+            {"title": '지원받을 수 있는 서비스', "body": '고용센터, 고용24, 여성새로일하기센터 등에서 대상별 취업상담·직업교육·연계 서비스를 확인할 수 있습니다.'},
+            {"title": '새 직장의 근로조건', "body": '계약기간, 임금, 근무시간, 유연근무 가능 여부, 사회보험 가입을 확인하세요. 과거 경력의 인정 여부도 회사별로 다릅니다.'},
+            {"title": '돌봄과 일 병행', "body": '육아·가족돌봄 관련 휴가·휴직·근로시간 단축 제도는 자격과 적용 요건이 있으므로 해당 제도의 공식 안내를 확인하세요.'},
+        ],
+    },
+    'first-job-checklist': {
+        "summary": '첫 직장에 입사하기 전에는 연봉뿐 아니라 근로계약서, 수습기간, 근무시간, 급여일을 확인하는 것이 중요합니다.',
+        "sections": [
+            {"title": '근로계약서 확인', "body": '근로계약 기간, 임금 구성, 소정근로시간, 휴일, 근무장소, 업무내용 등을 확인하고 계약서를 보관하세요.'},
+            {"title": '연봉과 실수령액', "body": '제시된 연봉이 기본급·고정수당·성과급 중 무엇을 포함하는지 확인하세요. 세금과 사회보험료 공제 후 실수령액은 달라질 수 있습니다.'},
+            {"title": '수습기간 확인', "body": '수습기간의 길이와 급여 조건, 평가 기준을 확인하세요. 수습이라는 이유만으로 모든 근로기준법 규정이 배제되는 것은 아닙니다.'},
+            {"title": '입사 전 체크리스트', "body": '① 근로계약서 ② 입사일·근무지 ③ 출퇴근·휴게시간 ④ 급여일 ⑤ 4대보험 ⑥ 휴가·복리후생 ⑦ 제출 서류'},
+        ],
+    },
+    'first-job-insurance': {
+        "summary": '첫 직장에서 공제되는 국민연금·건강보험·고용보험과 회사가 부담하는 산재보험을 구분해 알아보세요.',
+        "sections": [
+            {"title": '4대보험이란?', "body": '국민연금, 건강보험, 고용보험, 산업재해보상보험을 말합니다. 각 보험의 가입 대상과 보험료 부담 방식은 다릅니다.'},
+            {"title": '급여에서 무엇이 빠지나요?', "body": '일반적인 직장가입자는 국민연금·건강보험·고용보험의 근로자 부담분이 공제될 수 있습니다. 산재보험료는 원칙적으로 사업주가 부담합니다.'},
+            {"title": '가입 여부 확인', "body": '국민연금공단, 국민건강보험공단, 고용24 또는 근로복지공단 등에서 보험별 자격·가입 이력을 확인할 수 있습니다.'},
+            {"title": '단시간 근로자라면?', "body": '보험별로 근무시간·근무기간 등의 적용 기준이 다르므로 하나의 기준으로 4대보험 가입 여부를 단정하지 마세요.'},
+        ],
+    },
+    'foreign-worker-contract': {
+        "summary": '외국인 근로자도 국내에서 근로자로 일한다면 원칙적으로 근로기준법의 보호를 받습니다. 체류자격과 취업 가능 범위도 함께 확인해야 합니다.',
+        "sections": [
+            {"title": '근로계약에서 확인할 점', "body": '임금, 근무시간, 휴일, 근무장소, 계약기간을 확인하고 이해할 수 있는 언어로 내용을 충분히 설명받는 것이 좋습니다.'},
+            {"title": '최저임금과 수당', "body": '국적만을 이유로 최저임금 적용에서 제외되는 것은 아닙니다. 주휴일·연장·야간·휴일근로수당은 근무조건과 사업장 규모 등 법정 요건에 따라 판단합니다.'},
+            {"title": '체류자격과 취업', "body": '비자·체류자격별로 취업 허용 여부와 활동 범위가 다릅니다. 출입국·외국인청 또는 하이코리아의 공식 안내를 확인하세요.'},
+            {"title": '도움이 필요할 때', "body": '임금체불·근로조건은 고용노동부 1350, 출입국·체류 관련 문의는 외국인종합안내센터 1345에서 상담할 수 있습니다.'},
+        ],
+    },
+    'foreign-worker-insurance': {
+        "summary": '외국인 근로자의 사회보험 가입은 보험 종류, 국적, 체류자격, 고용형태와 사회보장협정 등에 따라 달라집니다.',
+        "sections": [
+            {"title": '국민연금', "body": '국적과 체류자격, 상호주의 및 사회보장협정 등에 따라 가입 또는 적용 제외 여부가 달라질 수 있습니다. 국민연금공단에서 확인하세요.'},
+            {"title": '건강보험', "body": '직장가입 대상 여부와 체류자격 등에 따라 적용됩니다. 지역가입과 피부양자 인정에는 별도 요건이 있을 수 있습니다.'},
+            {"title": '고용보험과 산재보험', "body": '고용보험은 체류자격 등에 따라 의무 또는 임의 가입 여부가 다를 수 있습니다. 산재보험은 원칙적으로 사업장에 적용되며 외국인 근로자도 보호 대상이 될 수 있습니다.'},
+            {"title": '가입 내역 확인', "body": '급여명세서 공제액과 각 공단의 자격·가입 기록을 비교하세요. 보험별로 담당 기관이 다릅니다.'},
+        ],
+    },
+})
+
+
 # ==========================================
 # 3. 공통 데이터 변환 함수
 # ==========================================
@@ -366,10 +481,11 @@ def category_ids_for(db: Session):
         select(GuideCategory)
     ).all()
 
-    return {
-        category.slug: category.id
-        for category in categories
-    }
+    result = {category.slug: category.id for category in categories}
+    for category in categories:
+        if category.name == "기타":
+            result["other"] = category.id
+    return result
 
 
 def policy_summary(policy: SupportPolicy):
@@ -416,6 +532,12 @@ def topic_card(topic, category_ids):
         if content
         else f"{law_name} 관련 내용을 확인해 보세요."
     )
+
+    if category_slug == "other":
+        category_slug = next(
+            (key for key, val in category_ids.items() if key != "other" and val == category_ids.get("other")),
+            "other",
+        )
 
     return {
         "id": f"topic-{slug}",
@@ -525,7 +647,7 @@ def get_categories(
             count = sum(
                 1
                 for topic in TOPICS
-                if topic[3] == category.slug
+                if (topic[3] == category.slug or (topic[3] == "other" and category.name == "기타"))
             )
 
         result.append({
@@ -767,79 +889,49 @@ def get_guide_detail(
                 detail="해당 주제의 설명이 준비되지 않았습니다.",
             )
 
-        law = db.scalar(
-            select(Law).where(
-                Law.law_name == topic[4]
-            )
-        )
-
-        if law is None:
-            raise HTTPException(
-                status_code=404,
-                detail="관련 법령이 저장되어 있지 않습니다.",
-            )
-
-        version = get_current_version(
-            db,
-            law.id,
-        )
-
-        if version is None:
-            raise HTTPException(
-                status_code=404,
-                detail="관련 법령 버전을 찾을 수 없습니다.",
-            )
-
-        # 조문 제목에서 주제와 관련된 내용을 검색
-        terms = topic[5]
-
-        matches = or_(
-            *[
-                LawArticle.heading.ilike(
-                    f"%{term}%"
-                )
-                for term in terms
-            ]
-        )
-
-        articles = db.scalars(
-            select(LawArticle)
-            .where(
-                LawArticle.law_version_id == version.id,
-                matches,
-            )
-            .order_by(
-                LawArticle.id.asc(),
-            )
-            .limit(5)
-        ).all()
-
-        law_articles = [
-            {
-                "id": article.id,
-                "article_no": article.article_no,
-                "heading": article.heading,
-                "official_text": article.official_text,
-            }
-            for article in articles
-        ]
-
+        law_articles = []
         references = []
+        version = None
 
-        if (
-            law.official_url
-            and law.official_url.startswith(
-                ("https://", "http://")
+        # 생활 안내형 콘텐츠는 관련 법령 데이터가 없어도 표시합니다.
+        if topic[4]:
+            law = db.scalar(
+                select(Law).where(Law.law_name == topic[4])
             )
-        ):
-            references.append({
-                "id": 1,
-                "type": "LAW",
-                "title": law.law_name,
-                "url": law.official_url,
-                "accessed_at": None,
-                "effective_on": version.effective_from,
-            })
+            if law is not None:
+                version = get_current_version(db, law.id)
+                if version is not None and topic[5]:
+                    matches = or_(*[
+                        LawArticle.heading.ilike(f"%{term}%")
+                        for term in topic[5]
+                    ])
+                    articles = db.scalars(
+                        select(LawArticle)
+                        .where(
+                            LawArticle.law_version_id == version.id,
+                            matches,
+                        )
+                        .order_by(LawArticle.id.asc())
+                        .limit(5)
+                    ).all()
+                    law_articles = [
+                        {
+                            "id": article.id,
+                            "article_no": article.article_no,
+                            "heading": article.heading,
+                            "official_text": article.official_text,
+                        }
+                        for article in articles
+                    ]
+                if law.official_url and law.official_url.startswith(("https://", "http://")):
+                    references.append({
+                        "id": 1,
+                        "type": "LAW",
+                        "title": law.law_name,
+                        "url": law.official_url,
+                        "accessed_at": None,
+                        "effective_on": version.effective_from if version else None,
+                    })
 
         body = "\n\n".join(
             (
@@ -859,8 +951,8 @@ def get_guide_detail(
             "sections": content["sections"],
             "law_articles": law_articles,
             "references": references,
-            "updated_at": version.source_checked_at,
-            "reviewed_at": version.source_checked_at,
+            "updated_at": version.source_checked_at if version else None,
+            "reviewed_at": version.source_checked_at if version else None,
         }
 
     raise HTTPException(

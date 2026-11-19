@@ -12,6 +12,8 @@ import CalculatorPage from '../pages/CalculatorPage'
 import GuidePage from '../pages/GuidePage'
 import GuideDetailPage from '../pages/GuideDetailPage'
 import QuizPage from '../pages/QuizPage'
+import AIPage from '../pages/AIPage'
+import MyPage from '../pages/MyPage'
 import NotFoundPage from '../pages/NotFoundPage'
 
 export default function AppRouter() {
@@ -62,9 +64,22 @@ export default function AppRouter() {
 
         {/* 로그인 필요한 페이지 */}
         <Route element={<ProtectedRoute />}>
+          {/* 임금 계산기 */}
           <Route
             path="/calculator"
             element={<CalculatorPage />}
+          />
+
+          {/* AI 챗봇 */}
+          <Route
+            path="/ai"
+            element={<AIPage />}
+          />
+
+          {/* 마이페이지 */}
+          <Route
+            path="/mypage"
+            element={<MyPage />}
           />
         </Route>
 

@@ -100,6 +100,7 @@ export default function AIPage() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [error, setError] = useState('')
+  const [conversationId, setConversationId] = useState<number | null>(null)
 
   const nextId = useRef(1)
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -141,7 +142,10 @@ export default function AIPage() {
       const result = await chatMutation.mutateAsync({
         message: question,
         history,
+        conversation_id: conversationId,
       })
+
+      setConversationId(result.conversation_id ?? null)
 
       setMessages((prev) => [
         ...prev,
@@ -166,6 +170,7 @@ export default function AIPage() {
     if (isLoading) return
 
     setMessages([])
+    setConversationId(null)
     setInput('')
     setError('')
     chatMutation.reset()
